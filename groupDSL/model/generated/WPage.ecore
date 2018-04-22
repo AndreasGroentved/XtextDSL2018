@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="wPage" nsURI="http://www.sdu.dk/WPage" nsPrefix="wPage">
+  <eClassifiers xsi:type="ecore:EClass" name="contents">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//variable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pages" upperBound="-1"
+        eType="#//page" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="page">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pagecontents" upperBound="-1"
+        eType="#//pagecontent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="pagecontent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="css" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//variable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="include" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="groupedview" eType="#//groupedview"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ifelse" eType="#//ifelse"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="groupedview">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="group" upperBound="-1"
+        eType="#//advancedtype" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="variable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vars" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="advancedvars" upperBound="-1"
+        eType="#//advancedtype" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="advancedtype" eSuperTypes="#//action"/>
+  <eClassifiers xsi:type="ecore:EClass" name="button" eSuperTypes="#//advancedtype">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+        eType="#//buttoncontent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="buttoncontent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" eType="#//click"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewConfig" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="include" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="click"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ifelse" eSuperTypes="#//click"/>
+  <eClassifiers xsi:type="ecore:EClass" name="if" eSuperTypes="#//ifelse">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ifaction" eType="#//action"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elseaction" eType="#//action"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ifcondition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="andorConditions" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="action" eSuperTypes="#//click"/>
+  <eClassifiers xsi:type="ecore:EClass" name="textview" eSuperTypes="#//advancedtype">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="view" eSuperTypes="#//advancedtype">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//viewcontent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="viewcontent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="table" eSuperTypes="#//viewcontent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tablescontents" upperBound="-1"
+        eType="#//tablecontent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="tablecontent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="header" eSuperTypes="#//tablecontent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

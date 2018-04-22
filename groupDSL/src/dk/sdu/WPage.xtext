@@ -1,0 +1,92 @@
+grammar dk.sdu.WPage with org.eclipse.xtext.common.Terminals
+
+generate wPage "http://www.sdu.dk/WPage"
+
+contents : ( variables+=variable | pages += page )*;
+
+page : 'page' ID '{' pagecontents += pagecontent* '}';
+
+pagecontent : title = title | css=css | variable = variable | external = external | include = include | groupedview = groupedview | ifelse = ifelse;
+
+title : 'title' ID;
+
+css : 'css' ID;
+
+groupedview : group+=advancedtype ('+' group+=advancedtype)?;
+
+variable : 'var' ( vars+=type | advancedvars+=advancedtype)*;
+
+type : text | number | boolean;
+
+number : 'number' ID STRING; //TODO make terminals
+
+boolean : 'bool' ID STRING;
+
+advancedtype : textview | view | button;
+
+button : 'button' ID '{' content += buttoncontent*  '}';
+
+viewconfiguration : dimension | style | cssclass | cssid;
+
+dimension : 'dimensions'  '"' ID '"';
+
+style : 'style' styledefinition*;
+
+styledefinition : 'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline';
+
+cssclass : 'cssclass' '"' ID '"';
+
+cssid : 'cssid'  '"' ID '"';
+
+buttoncontent : content= click | viewConfig=viewconfiguration | 'text' include = include;
+
+click : 'click' '->'  ifelse | action;
+
+ifelse : if '{' ifaction = action '}' (else '{' elseaction = action '}')?;
+
+if : 'if' ifcondition = booleancondition (andor andorConditions += booleancondition)*  ;
+
+andor: 'AND' | 'OR';
+
+else : 'else' ;
+
+action : 'next' | 'first' | alert | script | advancedtype ;
+
+external  : 'external' script;
+
+script : ID '(' ((ID | value)','?)*  ')';
+
+alert : 'alert'   '"'  value '"' ;
+
+textview : 'view' ID '{' contents+= textviewcontent* '}';
+
+textviewcontent : viewconfiguration | text | 'editable' STRING;
+
+text : 'text' ID '"' value '"' ;
+
+view : 'view' ID '{' contents+= viewcontent*  '}' ;
+
+viewcontent : viewconfiguration | text | image | table | include ;
+
+image : 'image' '"'value'"' ;
+
+booleancondition : left equalityoperator left | script;
+
+left: ID | INT;
+
+equalityoperator: '==' | '!=' | '<' | '>'|'<='|'>=' ;
+
+table : 'table' ID '{' tablescontents += tablecontent* '}';
+
+tablecontent : viewconfiguration | tabledimension | header | row;
+
+tabledimension : (include | STRING)*;
+
+header : 'header' value+= value*;
+
+row : 'row' value*;
+
+include : 'include' ID;
+
+value : STRING | include;
+
