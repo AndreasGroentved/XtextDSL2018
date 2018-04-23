@@ -2,91 +2,178 @@ grammar dk.sdu.WPage with org.eclipse.xtext.common.Terminals
 
 generate wPage "http://www.sdu.dk/WPage"
 
-contents : ( variables+=variable | pages += page )*;
+contents : 
+	( variables+=variable | pages += page )*
+;
 
-page : 'page' ID '{' pagecontents += pagecontent* '}';
+page : 
+	'page' ID '{' pagecontents += pagecontent* '}';
 
-pagecontent : title = title | css=css | variable = variable | external = external | include = include | groupedview = groupedview | ifelse = ifelse;
+pagecontent : 
+	title = title | css=css | variable = variable | external = external | include = include | groupedview = groupedview | ifelse = ifelse
+;
 
-title : 'title' ID;
+title : 
+	'title' ID
+;
 
-css : 'css' ID;
+css : 
+	'css' ID
+;
 
-groupedview : group+=advancedtype ('+' group+=advancedtype)?;
+groupedview : 
+	group+=advancedtype ('+' group+=advancedtype)?
+;
 
-variable : 'var' ( vars+=type | advancedvars+=advancedtype)*;
+variable : 
+	'var' ( vars+=type | advancedvars+=advancedtype)*
+;
 
-type : text | number | boolean;
+type : 
+	text | number | boolean
+;
 
-number : 'number' ID STRING; //TODO make terminals
+number : 
+	'number' ID STRING
+; //TODO make terminals
 
-boolean : 'bool' ID STRING;
+boolean : 
+	'bool' ID STRING
+;
 
-advancedtype : textview | view | button;
+advancedtype : 
+	textview | view | button
+;
 
-button : 'button' ID '{' content += buttoncontent*  '}';
+button : 
+	'button' ID '{' content += buttoncontent*  '}'
+;
 
-viewconfiguration : dimension | style | cssclass | cssid;
+viewconfiguration : 
+	dimension | style | cssclass | cssid
+;
 
-dimension : 'dimensions'  '"' ID '"';
+dimension : 
+	'dimensions'  '"' ID '"'
+;
 
-style : 'style' styledefinition*;
+style : 
+	'style' styledefinition*
+;
 
-styledefinition : 'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline';
+styledefinition : 
+	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline'
+;
 
-cssclass : 'cssclass' '"' ID '"';
+cssclass : 
+	'cssclass' '"' ID '"'
+;
 
-cssid : 'cssid'  '"' ID '"';
+cssid : 
+	'cssid'  '"' ID '"'
+;
 
-buttoncontent : content= click | viewConfig=viewconfiguration | 'text' include = include;
+buttoncontent : 
+	content= click | viewConfig=viewconfiguration | 'text' include = include
+;
 
-click : 'click' '->'  ifelse | action;
+click : 
+	'click' '->'  ifelse | action
+;
 
-ifelse : if '{' ifaction = action '}' (else '{' elseaction = action '}')?;
+ifelse : 
+	if '{' ifaction = action '}' (else '{' elseaction = action '}')?
+;
 
-if : 'if' ifcondition = booleancondition (andor andorConditions += booleancondition)*  ;
+if : 
+	'if' ifcondition = booleancondition (andor andorConditions += booleancondition)*  
+;
 
-andor: 'AND' | 'OR';
+andor : 
+	'AND' | 'OR'
+;
 
-else : 'else' ;
+else : 
+	'else' 
+;
 
-action : 'next' | 'first' | alert | script | advancedtype ;
+action : 
+	'next' | 'first' | alert | script | advancedtype 
+;
 
-external  : 'external' script;
+external : 
+	'external' script
+;
 
-script : ID '(' ((ID | value)','?)*  ')';
+script : 
+	ID '(' ((ID | value)','?)*  ')'
+;
 
-alert : 'alert'   '"'  value '"' ;
+alert : 
+	'alert'   '"'  value '"' 
+;
 
-textview : 'view' ID '{' contents+= textviewcontent* '}';
+textview : 
+	'view' ID '{' contents+= textviewcontent* '}'
+;
 
-textviewcontent : viewconfiguration | text | 'editable' STRING;
+textviewcontent : 
+	viewconfiguration | text | 'editable' STRING
+;
 
-text : 'text' ID '"' value '"' ;
+text : 
+	'text' ID '"' value '"' 
+;
 
-view : 'view' ID '{' contents+= viewcontent*  '}' ;
+view : 
+	'view' ID '{' contents+= viewcontent*  '}' 
+;
 
-viewcontent : viewconfiguration | text | image | table | include ;
+viewcontent : 
+	viewconfiguration | text | image | table | include
+;
 
-image : 'image' '"'value'"' ;
+image : 
+	'image' '"'value'"' 
+;
 
-booleancondition : left equalityoperator left | script;
+booleancondition : 
+	left equalityoperator left | script
+;
 
-left: ID | INT;
+left: 
+	ID | INT
+;
 
-equalityoperator: '==' | '!=' | '<' | '>'|'<='|'>=' ;
+equalityoperator: 
+	'==' | '!=' | '<' | '>'|'<='|'>=' 
+;
 
-table : 'table' ID '{' tablescontents += tablecontent* '}';
+table : 
+	'table' ID '{' tablescontents += tablecontent* '}'
+;
 
-tablecontent : viewconfiguration | tabledimension | header | row;
+tablecontent : 
+	viewconfiguration | tabledimension | header | row
+;
 
-tabledimension : (include | STRING)*;
+tabledimension : 
+	(include | STRING)*
+;
 
-header : 'header' value+= value*;
+header : 
+	'header' value+= value*
+;
 
-row : 'row' value*;
+row : 
+	'row' value*
+;
 
-include : 'include' ID;
+include : 
+	'include' ID
+;
 
-value : STRING | include;
+value : 
+	STRING | include
+;
 
