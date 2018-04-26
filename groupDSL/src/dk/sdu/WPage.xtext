@@ -2,178 +2,190 @@ grammar dk.sdu.WPage with org.eclipse.xtext.common.Terminals
 
 generate wPage "http://www.sdu.dk/WPage"
 
-contents : 
-	( variables+=variable | pages += page )*
+Contents: 
+	contents+= Content*
 ;
 
-page : 
-	'page' ID '{' pagecontents += pagecontent* '}';
-
-pagecontent : 
-	title = title | css=css | variable = variable | external = external | include = include | groupedview = groupedview | ifelse = ifelse
+Content:
+	Variable | Page
 ;
 
-title : 
-	'title' ID
+Page: 
+	'page' name=STRING '{' pagecontents += PageContent* '}'
 ;
 
-css : 
-	'css' ID
+PageContent: 
+	Title | Css | Variable | External | Include | GroupedView | IfElse
 ;
 
-groupedview : 
-	group+=advancedtype ('+' group+=advancedtype)?
+Title: 
+	'title' value=STRING
 ;
 
-variable : 
-	'var' ( vars+=type | advancedvars+=advancedtype)*
+Css: 
+	'css' value=STRING
 ;
 
-type : 
-	text | number | boolean
+GroupedView: 
+	group+=AdvancedType ('+' group+=AdvancedType)*
 ;
 
-number : 
-	'number' ID STRING
-; //TODO make terminals
-
-boolean : 
-	'bool' ID STRING
+Variable: 
+	'var' (Type | AdvancedType)
 ;
 
-advancedtype : 
-	textview | view | button
+Type: 
+	Text | Number | Boolean
 ;
 
-button : 
-	'button' ID '{' content += buttoncontent*  '}'
+Text returns Type: 
+	'text' name=ID value=STRING 
 ;
 
-viewconfiguration : 
-	dimension | style | cssclass | cssid
+Number returns Type: 
+	'number' name=ID value=ID
 ;
 
-dimension : 
-	'dimensions'  '"' ID '"'
+Boolean returns Type: 
+	'bool' name=ID value=ID
 ;
 
-style : 
-	'style' styledefinition*
+AdvancedType: 
+	TextView | View | Button
 ;
 
-styledefinition : 
+TextView returns AdvancedType: 
+	'textview' name=ID '{' contents+= TextViewContent* '}'
+;
+
+View returns AdvancedType: 
+	'view' name=ID '{' contents+= ViewContent*  '}' 
+;
+
+Button returns AdvancedType: 
+	'button' name=ID '{' contents += ButtonContent*  '}'
+;
+
+ViewConfiguration: 
+	Dimension | Style | CssClass | CssId
+;
+
+Dimension: 
+	'dimensions' value=STRING
+;
+
+Style: 
+	'style' styleDefinitions+=StyleDefinition+
+;
+
+StyleDefinition: 
 	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline'
 ;
 
-cssclass : 
-	'cssclass' '"' ID '"'
+CssClass: 
+	'cssclass' value=STRING
 ;
 
-cssid : 
-	'cssid'  '"' ID '"'
+CssId: 
+	'cssid' value=STRING
 ;
 
-buttoncontent : 
-	content= click | viewConfig=viewconfiguration | 'text' include = include
+ButtonContent: 
+	click=Click | viewConfig=ViewConfiguration | 'text' include=Include
 ;
 
-click : 
-	'click' '->'  ifelse | action
+Click: 
+	'click' '->'  (IfElse | Action)
 ;
 
-ifelse : 
-	if '{' ifaction = action '}' (else '{' elseaction = action '}')?
+IfElse: 
+	If '{' ifAction = Action '}' ( 'else' '{' elseAction = Action '}')?
 ;
 
-if : 
-	'if' ifcondition = booleancondition (andor andorConditions += booleancondition)*  
+If: 
+	'if' ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
 ;
 
-andor : 
+AndOr: 
 	'AND' | 'OR'
 ;
 
-else : 
-	'else' 
+Action: 
+	action=Next | action=First | Alert | Script | AdvancedType 
 ;
 
-action : 
-	'next' | 'first' | alert | script | advancedtype 
+Next:
+	'next'
 ;
 
-external : 
-	'external' script
+First:
+	'First'
 ;
 
-script : 
-	ID '(' ((ID | value)','?)*  ')'
+External: 
+	'external' script=Script
 ;
 
-alert : 
-	'alert'   '"'  value '"' 
+Script: 
+	name=ID '(' ((parameters+=Value)','?)*  ')'
 ;
 
-textview : 
-	'view' ID '{' contents+= textviewcontent* '}'
+Alert: 
+	'alert' value=STRING 
 ;
 
-textviewcontent : 
-	viewconfiguration | text | 'editable' STRING
+TextViewContent: 
+	ViewConfiguration | Text | Editable
 ;
 
-text : 
-	'text' ID '"' value '"' 
+Editable:
+	'editable' editable=STRING
 ;
 
-view : 
-	'view' ID '{' contents+= viewcontent*  '}' 
+ViewContent: 
+	ViewConfiguration | Text | Image | Table | Include
 ;
 
-viewcontent : 
-	viewconfiguration | text | image | table | include
+Image: 
+	'image' value=STRING 
 ;
 
-image : 
-	'image' '"'value'"' 
+BooleanCondition: 
+	left=Operand operator=EqualityOperator right=Operand | Script
 ;
 
-booleancondition : 
-	left equalityoperator left | script
-;
-
-left: 
+Operand: 
 	ID | INT
 ;
 
-equalityoperator: 
-	'==' | '!=' | '<' | '>'|'<='|'>=' 
+EqualityOperator: 
+	'==' | '!=' | '<' | '>' | '<=' | '>=' 
 ;
 
-table : 
-	'table' ID '{' tablescontents += tablecontent* '}'
+Table: 
+	'table' name=STRING '{' tableContents += TableContent* '}'
 ;
 
-tablecontent : 
-	viewconfiguration | tabledimension | header | row
+TableContent: 
+	ViewConfiguration | TableDimension | Header | Row
 ;
 
-tabledimension : 
-	(include | STRING)*
+TableDimension: 
+	'tabledimensions' value=STRING
 ;
 
-header : 
-	'header' value+= value*
+Header: 
+	'header' contents+=Value+
 ;
 
-row : 
-	'row' value*
+Row: 
+	'row' contents+=Value+
 ;
 
-include : 
-	'include' ID
+Include: 
+	'include' include=AdvancedType
 ;
 
-value : 
-	STRING | include
+Value: 
+	val=STRING | Include
 ;
-

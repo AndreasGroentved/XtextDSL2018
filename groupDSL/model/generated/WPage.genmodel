@@ -6,60 +6,104 @@
     copyrightFields="false" runtimeVersion="2.13">
   <genPackages prefix="WPage" basePackage="dk.sdu" disposableProviderFactory="true"
       fileExtensions="wpage" ecorePackage="WPage.ecore#/">
-    <genClasses ecoreClass="WPage.ecore#//contents">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//contents/variables"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//contents/pages"/>
+    <genClasses ecoreClass="WPage.ecore#//Contents">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Contents/contents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//page">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//page/pagecontents"/>
+    <genClasses ecoreClass="WPage.ecore#//Content">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Content/name"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//pagecontent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//pagecontent/title"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//pagecontent/css"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//pagecontent/variable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//pagecontent/external"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//pagecontent/include"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//pagecontent/groupedview"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//pagecontent/ifelse"/>
+    <genClasses ecoreClass="WPage.ecore#//Page">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Page/pagecontents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//groupedview">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//groupedview/group"/>
+    <genClasses ecoreClass="WPage.ecore#//PageContent"/>
+    <genClasses ecoreClass="WPage.ecore#//Title">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Title/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//variable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//variable/vars"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//variable/advancedvars"/>
+    <genClasses ecoreClass="WPage.ecore#//Css">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Css/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//advancedtype"/>
-    <genClasses ecoreClass="WPage.ecore#//button">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//button/content"/>
+    <genClasses ecoreClass="WPage.ecore#//GroupedView">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//GroupedView/group"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//buttoncontent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//buttoncontent/content"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//buttoncontent/viewConfig"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//buttoncontent/include"/>
+    <genClasses ecoreClass="WPage.ecore#//Variable"/>
+    <genClasses ecoreClass="WPage.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Type/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//click"/>
-    <genClasses ecoreClass="WPage.ecore#//ifelse"/>
-    <genClasses ecoreClass="WPage.ecore#//if">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//if/ifaction"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//if/elseaction"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//if/ifcondition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//if/andorConditions"/>
+    <genClasses ecoreClass="WPage.ecore#//AdvancedType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//AdvancedType/contents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//action"/>
-    <genClasses ecoreClass="WPage.ecore#//textview">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//textview/contents"/>
+    <genClasses ecoreClass="WPage.ecore#//ViewConfiguration"/>
+    <genClasses ecoreClass="WPage.ecore#//Dimension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Dimension/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//view">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//view/contents"/>
+    <genClasses ecoreClass="WPage.ecore#//Style">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Style/styleDefinitions"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//viewcontent"/>
-    <genClasses ecoreClass="WPage.ecore#//table">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//table/tablescontents"/>
+    <genClasses ecoreClass="WPage.ecore#//CssClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//CssClass/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//tablecontent"/>
-    <genClasses ecoreClass="WPage.ecore#//header">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//header/value"/>
+    <genClasses ecoreClass="WPage.ecore#//CssId">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//CssId/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//ButtonContent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/click"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/viewConfig"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/include"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Click"/>
+    <genClasses ecoreClass="WPage.ecore#//IfElse"/>
+    <genClasses ecoreClass="WPage.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//If/ifAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//If/elseAction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//If/ifCondition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//If/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//If/andOrConditions"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Action/action"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//External">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//External/script"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Script">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Script/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Script/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Alert">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Alert/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//TextViewContent"/>
+    <genClasses ecoreClass="WPage.ecore#//Editable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Editable/editable"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//ViewContent"/>
+    <genClasses ecoreClass="WPage.ecore#//Image">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Image/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//BooleanCondition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/right"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Table">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Table/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Table/tableContents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//TableContent"/>
+    <genClasses ecoreClass="WPage.ecore#//TableDimension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//TableDimension/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Header">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Header/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Row">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Row/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Include">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Include/include"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Value/val"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
