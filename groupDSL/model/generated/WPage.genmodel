@@ -25,29 +25,21 @@
     <genClasses ecoreClass="WPage.ecore#//GroupedView">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//GroupedView/group"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Variable"/>
+    <genClasses ecoreClass="WPage.ecore#//Variable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Variable/value"/>
+    </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Type">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Type/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//AdvancedType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//AdvancedType/contents"/>
-    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//AdvancedType"/>
     <genClasses ecoreClass="WPage.ecore#//ViewConfiguration"/>
-    <genClasses ecoreClass="WPage.ecore#//Dimension">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Dimension/value"/>
+    <genClasses ecoreClass="WPage.ecore#//DimensionValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//DimensionValue/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Style">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Style/styleDefinitions"/>
-    </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//CssClass">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//CssClass/value"/>
-    </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//CssId">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//CssId/value"/>
+    <genClasses ecoreClass="WPage.ecore#//CssConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//CssConfiguration/value"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//ButtonContent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/click"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/viewConfig"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/include"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Click"/>
@@ -72,7 +64,6 @@
     <genClasses ecoreClass="WPage.ecore#//Alert">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Alert/value"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//TextViewContent"/>
     <genClasses ecoreClass="WPage.ecore#//Editable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Editable/editable"/>
     </genClasses>
@@ -86,7 +77,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/right"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Table">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Table/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Table/tableContents"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//TableContent"/>
@@ -105,5 +95,24 @@
     <genClasses ecoreClass="WPage.ecore#//Value">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Value/val"/>
     </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Text"/>
+    <genClasses ecoreClass="WPage.ecore#//Number"/>
+    <genClasses ecoreClass="WPage.ecore#//Boolean"/>
+    <genClasses ecoreClass="WPage.ecore#//View">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//View/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Button">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Button/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Dimension">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Dimension/values"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Height"/>
+    <genClasses ecoreClass="WPage.ecore#//Width"/>
+    <genClasses ecoreClass="WPage.ecore#//Style">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Style/styleDefinitions"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//CssClass"/>
+    <genClasses ecoreClass="WPage.ecore#//CssId"/>
   </genPackages>
 </genmodel:GenModel>

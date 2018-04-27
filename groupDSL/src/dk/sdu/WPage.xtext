@@ -31,7 +31,7 @@ GroupedView:
 ;
 
 Variable: 
-	'var' (Type | AdvancedType)
+	'var' name=ID (value=Type | value=AdvancedType)
 ;
 
 Type: 
@@ -39,59 +39,71 @@ Type:
 ;
 
 Text returns Type: 
-	'text' name=ID value=STRING 
+	{Text} 'text' value=STRING 
 ;
 
 Number returns Type: 
-	'number' name=ID value=ID
+	{Number} 'number' value=ID
 ;
 
 Boolean returns Type: 
-	'bool' name=ID value=ID
+	{Boolean} 'bool' value=ID
 ;
 
 AdvancedType: 
-	TextView | View | Button
-;
-
-TextView returns AdvancedType: 
-	'textview' name=ID '{' contents+= TextViewContent* '}'
+	View | Button
 ;
 
 View returns AdvancedType: 
-	'view' name=ID '{' contents+= ViewContent*  '}' 
+	{View} 'view' '{' contents+= ViewContent*  '}' 
 ;
 
 Button returns AdvancedType: 
-	'button' name=ID '{' contents += ButtonContent*  '}'
+	{Button} 'button' '{' contents += ButtonContent*  '}'
 ;
 
 ViewConfiguration: 
-	Dimension | Style | CssClass | CssId
+	Dimension | Style
 ;
 
-Dimension: 
-	'dimensions' value=STRING
+Dimension returns ViewConfiguration: 
+	{Dimension} 'dimensions' values+=DimensionValue+
 ;
 
-Style: 
-	'style' styleDefinitions+=StyleDefinition+
+DimensionValue:
+	Height | Width
+;
+
+Height returns DimensionValue:
+	{Height} 'height' value=STRING
+;
+
+Width returns DimensionValue:
+	{Width} 'width' value=STRING
+;
+
+Style returns ViewConfiguration: 
+	{Style} 'style' styleDefinitions+=StyleDefinition+
 ;
 
 StyleDefinition: 
 	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline'
 ;
 
-CssClass: 
-	'cssclass' value=STRING
+CssConfiguration:
+	CssClass | CssId
 ;
 
-CssId: 
-	'cssid' value=STRING
+CssClass returns CssConfiguration: 
+	{CssClass} 'cssclass' value=STRING
+;
+
+CssId returns CssConfiguration: 
+	{CssId} 'cssid' value=STRING
 ;
 
 ButtonContent: 
-	click=Click | viewConfig=ViewConfiguration | 'text' include=Include
+	Click | ViewConfiguration| CssConfiguration | Text | 'text' include=Include
 ;
 
 Click: 
@@ -134,16 +146,12 @@ Alert:
 	'alert' value=STRING 
 ;
 
-TextViewContent: 
-	ViewConfiguration | Text | Editable
-;
-
 Editable:
 	'editable' editable=STRING
 ;
 
 ViewContent: 
-	ViewConfiguration | Text | Image | Table | Include
+	ViewConfiguration | CssConfiguration | Text | Image | Table | Include | Editable
 ;
 
 Image: 
@@ -163,11 +171,11 @@ EqualityOperator:
 ;
 
 Table: 
-	'table' name=STRING '{' tableContents += TableContent* '}'
+	{Table} 'table' '{' tableContents += TableContent* '}'
 ;
 
 TableContent: 
-	ViewConfiguration | TableDimension | Header | Row
+	ViewConfiguration | CssConfiguration | TableDimension | Header | Row
 ;
 
 TableDimension: 
