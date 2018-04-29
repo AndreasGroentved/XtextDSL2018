@@ -51,7 +51,7 @@ Boolean returns Type:
 ;
 
 AdvancedType: 
-	View | Button
+	View | Button | Table
 ;
 
 View returns AdvancedType: 
@@ -60,6 +60,10 @@ View returns AdvancedType:
 
 Button returns AdvancedType: 
 	{Button} 'button' '{' contents += ButtonContent*  '}'
+;
+
+DisplayConfiguration:
+	ViewConfiguration | CssConfiguration
 ;
 
 ViewConfiguration: 
@@ -103,11 +107,11 @@ CssId returns CssConfiguration:
 ;
 
 ButtonContent: 
-	Click | ViewConfiguration| CssConfiguration | Text | 'text' include=Include
+	Click | DisplayConfiguration | Text | 'text' include=Include
 ;
 
 Click: 
-	'click' '->'  (IfElse | Action)
+	'click' '->' (IfElse | Action)
 ;
 
 IfElse: 
@@ -123,15 +127,11 @@ AndOr:
 ;
 
 Action: 
-	action=Next | action=First | Alert | Script | AdvancedType 
+	pageDirection=PageDirection | Alert | Script | AdvancedType 
 ;
 
-Next:
-	'next'
-;
-
-First:
-	'First'
+PageDirection:
+	'next' | 'previous' | 'first' | 'last'
 ;
 
 External: 
@@ -151,7 +151,7 @@ Editable:
 ;
 
 ViewContent: 
-	ViewConfiguration | CssConfiguration | Text | Image | Table | Include | Editable
+	DisplayConfiguration | Text | Image | Table | Include | Editable
 ;
 
 Image: 
@@ -171,11 +171,11 @@ EqualityOperator:
 ;
 
 Table: 
-	{Table} 'table' '{' tableContents += TableContent* '}'
+	{Table} 'table' '{' contents += TableContent* '}'
 ;
 
 TableContent: 
-	ViewConfiguration | CssConfiguration | TableDimension | Header | Row
+	DisplayConfiguration | TableDimension | Header | Row
 ;
 
 TableDimension: 
@@ -191,9 +191,9 @@ Row:
 ;
 
 Include: 
-	'include' include=AdvancedType
+	'include' include=[Variable]
 ;
 
 Value: 
-	val=STRING | Include
+	value=STRING | Include
 ;

@@ -21,6 +21,11 @@ import dk.sdu.wPage.Height
 import dk.sdu.wPage.Width
 import dk.sdu.wPage.CssConfiguration
 import dk.sdu.wPage.Text
+import dk.sdu.wPage.Table
+import dk.sdu.wPage.DisplayConfiguration
+import dk.sdu.wPage.Header
+import dk.sdu.wPage.Row
+import dk.sdu.wPage.Image
 
 /**
  * Generates code from your model files on save.
@@ -37,7 +42,7 @@ class WPageGenerator extends AbstractGenerator {
 		fsa.generateFile(page.name + ".html", page.generateHTML)
 	}
 	
-	def CharSequence generateHTML(Page page) '''
+	def generateHTML(Page page) '''
 	<html>
 		<header>
 			<script>
@@ -56,31 +61,42 @@ class WPageGenerator extends AbstractGenerator {
 	</html>	
 	'''
 	
-	def CharSequence generatePageBodyContent(GroupedView groupedView) '''
+	def generatePageBodyContent(GroupedView groupedView) '''
 		«FOR g: groupedView.group»
 		«g.generateAdvancedType»
 		«ENDFOR»
 	'''
 	
-	def dispatch CharSequence generateAdvancedType(View view) '''
-		<div>
-			
+	def dispatch generateAdvancedType(View view) '''
+		<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+			«FOR i:view.contents.filter(Image)»
+			«i.generateImage»
+			«ENDFOR»
+			«FOR t:view.contents.filter(Text)»
+			«t.generateText»
+			«ENDFOR»
 		</div>
 	'''
 	
-	def dispatch CharSequence generateAdvancedType(Button button) '''
-		<button type="button"«button.contents.filter(CssConfiguration).join(" ")[it.generateCssConfiguration]» style="«button.contents.filter(ViewConfiguration).join(" ")[it.generateViewConfiguration]»">«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»</button>
+	def generateImage(Image image) '''<img src="«image.value»">'''
+	
+	def generateText(Text text) '''<p>«text.value»</p>'''
+	
+	def dispatch generateAdvancedType(Button button) '''
+		<button type="button"«button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»</button>
 	'''
 	
-	def dispatch CharSequence generateViewConfiguration(Dimension dimension) '''
+	def generateDisplayConfiguration(Iterable<DisplayConfiguration> configurations) '''«configurations.filter(CssConfiguration).join(" ")[it.generateCssConfiguration]» style="«configurations.filter(ViewConfiguration).join(" ")[it.generateViewConfiguration]»"'''
+	
+	def dispatch generateViewConfiguration(Dimension dimension) '''
 		«dimension.values.map[it.generateDimensionValue].join(" ")»
 	'''
 	
-	def dispatch CharSequence generateDimensionValue(Height height) '''height:«height.value»;'''
+	def dispatch generateDimensionValue(Height height) '''height:«height.value»;'''
 	
-	def dispatch CharSequence generateDimensionValue(Width width) '''width:«width.value»;'''
+	def dispatch generateDimensionValue(Width width) '''width:«width.value»;'''
 	
-	def dispatch CharSequence generateViewConfiguration(Style style) '''
+	def dispatch generateViewConfiguration(Style style) '''
 		«FOR s:style.styleDefinitions»
 		«««TODO: fix new lines
 		«switch s {
@@ -92,9 +108,38 @@ class WPageGenerator extends AbstractGenerator {
 			default : ""
 		}»
 		«ENDFOR»
-		'''
+	'''
 	
-	def dispatch CharSequence generateCssConfiguration(CssClass cssClass) '''class="«cssClass.value»"'''
+	def dispatch generateCssConfiguration(CssClass cssClass) '''class="«cssClass.value»"'''
 	
-	def dispatch CharSequence generateCssConfiguration(CssId cssId) '''id="«cssId.value»"'''
+	def dispatch generateCssConfiguration(CssId cssId) '''id="«cssId.value»"'''
+	
+	def dispatch generateAdvancedType(Table table) '''
+		<table «table.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+			«IF table.contents.contains(Header)»
+			«table.contents.filter(Header).findFirst[it instanceof Header].generateTableHeader»
+			«ENDIF»
+			«IF table.contents.contains(Row)»
+			«table.contents.filter(Row).generateTableRows»
+			«ENDIF»
+		</table>
+	'''
+	
+	def generateTableHeader(Header header) '''
+	<tr>
+		«FOR h: header.contents»
+		<th>«h.value»</th>
+		«ENDFOR»
+	</tr>
+	'''
+	
+	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow]»'''
+	
+	def generateTableRow(Row row) '''
+	<tr>
+		«FOR c:row.contents»
+		<td>«c.value»</td>
+		«ENDFOR»
+	</tr>
+	'''
 }
