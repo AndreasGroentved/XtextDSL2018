@@ -116,10 +116,10 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def dispatch generateAdvancedType(Table table) '''
 		<table «table.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
-			«IF table.contents.contains(Header)»
+			«IF table.contents.exists[it instanceof Header]»
 			«table.contents.filter(Header).findFirst[it instanceof Header].generateTableHeader»
 			«ENDIF»
-			«IF table.contents.contains(Row)»
+			«IF table.contents.exists[it instanceof Row]»
 			«table.contents.filter(Row).generateTableRows»
 			«ENDIF»
 		</table>
@@ -133,7 +133,7 @@ class WPageGenerator extends AbstractGenerator {
 	</tr>
 	'''
 	
-	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow]»'''
+	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow].join("")»'''
 	
 	def generateTableRow(Row row) '''
 	<tr>
