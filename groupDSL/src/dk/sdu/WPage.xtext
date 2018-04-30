@@ -43,7 +43,7 @@ Text returns Type:
 ;
 
 Number returns Type: 
-	{Number} 'number' value=ID
+	{Number} 'number' value=FLOAT
 ;
 
 Boolean returns Type: 
@@ -197,3 +197,6 @@ Include:
 Value: 
 	value=STRING | Include
 ;
+
+
+terminal FLOAT: INT '.' INT;
