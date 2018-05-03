@@ -26,6 +26,12 @@ import dk.sdu.wPage.DisplayConfiguration
 import dk.sdu.wPage.Header
 import dk.sdu.wPage.Row
 import dk.sdu.wPage.Image
+import dk.sdu.wPage.Click
+import java.util.List
+import java.util.ArrayList
+import dk.sdu.wPage.Variable
+import dk.sdu.wPage.AdvancedType
+import dk.sdu.wPage.Type
 
 /**
  * Generates code from your model files on save.
@@ -35,18 +41,53 @@ import dk.sdu.wPage.Image
 class WPageGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		pageNames = resource.allContents.filter(Page).map[it.name].toList
+		
 		resource.allContents.filter(Page).forEach[generateHtmlPageFile(fsa)]
 	}
 	
+	var List<String> pageNames = new ArrayList;
+	
+	
+	
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
-		fsa.generateFile(page.name + ".html", page.generateHTML)
+		val pageName =page.name + ".html"
+		fsa.generateFile(pageName, page.generateHTML)
 	}
+	
+	def generateNavigationMethods(Page page){
+		val size = pageNames.size 
+		val currentIndex = pageNames.indexOf(page.name)
+		
+		val previous = "prev(){window.location.href = '"+  pageNames.get((currentIndex-1).mod(size))     + ".html'} "
+		val next = "next(){window.location.href = '"+  pageNames.get((currentIndex+1).mod(size))     + ".html'} "
+		val goTo = "goto(pageName){window.location.href = 'pageName.concat('.html')'}"
+		
+		previous + next + goTo
+	}
+	
+	def generateVars(Page page){
+		val vars = page.pagecontents.filter(Variable)
+		if(vars.isEmpty()) return ''''''
+		
+		vars.join("; ")["var " + it.name + " = " +  if(it.value instanceof AdvancedType) (it.value as AdvancedType).generateAdvancedType 
+			else (it.value as Type).value
+		]
+	}
+	
+	
+	
+	def int mod(int number, int modulo){
+		
+		(number % modulo + modulo) % modulo
+	} 
 	
 	def generateHTML(Page page) '''
 	<html>
 		<header>
 			<script>
-				
+				«page.generateNavigationMethods»
+				«page.generateVars»
 			</script>
 			«IF page.pagecontents.exists[it instanceof Title]»
 				«««TODO: alternative to find first
@@ -83,13 +124,25 @@ class WPageGenerator extends AbstractGenerator {
 	def generateText(Text text) '''<p>«text.value»</p>'''
 	
 	def dispatch generateAdvancedType(Button button) '''
-		<button type="button"«button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»</button>
+		<button type="button"«
+		button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+		«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»
+		«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[] »«ENDIF»
+		</button>
 	'''
+	
+	def getButtonEvents(Click click) {
+		//val start = "onClick ='" + click. 
+		
+		
+		
+		
+	}
 	
 	def generateDisplayConfiguration(Iterable<DisplayConfiguration> configurations) '''«configurations.filter(CssConfiguration).join(" ")[it.generateCssConfiguration]» style="«configurations.filter(ViewConfiguration).join(" ")[it.generateViewConfiguration]»"'''
 	
 	def dispatch generateViewConfiguration(Dimension dimension) '''
-		«dimension.values.map[it.generateDimensionValue].join(" ")»
+		«dimension.values.join(" ")[it.generateDimensionValue]»
 	'''
 	
 	def dispatch generateDimensionValue(Height height) '''height:«height.value»;'''
