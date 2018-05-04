@@ -34,7 +34,7 @@ Variable:
 	'var' name=ID (value=Type | value=AdvancedType)
 ;
 
-Type: 
+Type: 	
 	Text | Number | Boolean
 ;
 
@@ -43,7 +43,7 @@ Text returns Type:
 ;
 
 Number returns Type: 
-	{Number} 'number' value=ID
+	{Number} 'number' value= STRING
 ;
 
 Boolean returns Type: 
@@ -51,7 +51,7 @@ Boolean returns Type:
 ;
 
 AdvancedType: 
-	View | Button
+	View | Button | Table
 ;
 
 View returns AdvancedType: 
@@ -60,6 +60,10 @@ View returns AdvancedType:
 
 Button returns AdvancedType: 
 	{Button} 'button' '{' contents += ButtonContent*  '}'
+;
+
+DisplayConfiguration:
+	ViewConfiguration | CssConfiguration
 ;
 
 ViewConfiguration: 
@@ -103,11 +107,11 @@ CssId returns CssConfiguration:
 ;
 
 ButtonContent: 
-	Click | ViewConfiguration| CssConfiguration | Text | 'text' include=Include
+	Clicker | DisplayConfiguration | Text | 'text' include=Include
 ;
 
-Click: 
-	'click' '->'  (IfElse | Action)
+Clicker: 
+	{Click} 'click' '->'  click = (IfElse |Action)
 ;
 
 IfElse: 
@@ -115,7 +119,7 @@ IfElse:
 ;
 
 If: 
-	'if' ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
+	{If} ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
 ;
 
 AndOr: 
@@ -123,15 +127,11 @@ AndOr:
 ;
 
 Action: 
-	action=Next | action=First | Alert | Script | AdvancedType 
+	 {Action} (pageDirection=PageDirection | alert=Alert | script=Script | advancedType=AdvancedType) 
 ;
 
-Next:
-	'next'
-;
-
-First:
-	'First'
+PageDirection:
+	'next' | 'previous' | 'first' | 'last'
 ;
 
 External: 
@@ -151,7 +151,7 @@ Editable:
 ;
 
 ViewContent: 
-	ViewConfiguration | CssConfiguration | Text | Image | Table | Include | Editable
+	DisplayConfiguration | Text | Image | Table | Include | Editable
 ;
 
 Image: 
@@ -159,7 +159,7 @@ Image:
 ;
 
 BooleanCondition: 
-	left=Operand operator=EqualityOperator right=Operand | Script
+	left=Operand operator=EqualityOperator right=Operand | Script | Alert
 ;
 
 Operand: 
@@ -171,11 +171,11 @@ EqualityOperator:
 ;
 
 Table: 
-	{Table} 'table' '{' tableContents += TableContent* '}'
+	{Table} 'table' '{' contents += TableContent* '}'
 ;
 
 TableContent: 
-	ViewConfiguration | CssConfiguration | TableDimension | Header | Row
+	DisplayConfiguration | TableDimension | Header | Row
 ;
 
 TableDimension: 
@@ -190,10 +190,15 @@ Row:
 	'row' contents+=Value+
 ;
 
-Include: 
-	'include' include=AdvancedType
+Include returns GroupedView: 
+  {Include}	'include' include=[Variable]
 ;
 
 Value: 
-	val=STRING | Include
+	value=STRING | Include
 ;
+
+@Override
+terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
+//terminal FLOAT:  /*INT |('0'..'9')+('.'('0'..'9')*)?*/ STRING;
+/*terminal CSSCSS: (STRING)'.css' STRING;*/
