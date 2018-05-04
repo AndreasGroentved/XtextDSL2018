@@ -19,18 +19,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="Css" eSuperTypes="#//PageContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GroupedView" eSuperTypes="#//PageContent">
+  <eClassifiers xsi:type="ecore:EClass" name="GroupedView" eSuperTypes="#//PageContent #//ViewContent #//Value">
     <eStructuralFeatures xsi:type="ecore:EReference" name="group" upperBound="-1"
         eType="#//AdvancedType" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//Content #//PageContent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ButtonContent"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ButtonContent #//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AdvancedType" eSuperTypes="#//Action"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AdvancedType"/>
   <eClassifiers xsi:type="ecore:EClass" name="DisplayConfiguration" eSuperTypes="#//ButtonContent #//ViewContent #//TableContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ViewConfiguration" eSuperTypes="#//DisplayConfiguration"/>
   <eClassifiers xsi:type="ecore:EClass" name="DimensionValue">
@@ -40,11 +40,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ButtonContent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Include"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//GroupedView"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Click" eSuperTypes="#//ButtonContent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IfElse" eSuperTypes="#//PageContent #//Click"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Clicker" eSuperTypes="#//ButtonContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IfElse" eSuperTypes="#//PageContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="If" eSuperTypes="#//IfElse">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ifAction" eType="#//Action"
         containment="true"/>
@@ -57,19 +57,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="andOrConditions" upperBound="-1"
         eType="#//BooleanCondition" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//Click">
+  <eClassifiers xsi:type="ecore:EClass" name="Action">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pageDirection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alert" eType="#//Alert"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="script" eType="#//Script"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="advancedType" eType="#//AdvancedType"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="External" eSuperTypes="#//PageContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="script" eType="#//Script"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Script" eSuperTypes="#//Action #//BooleanCondition">
+  <eClassifiers xsi:type="ecore:EClass" name="Script" eSuperTypes="#//BooleanCondition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Value" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Alert" eSuperTypes="#//Action">
+  <eClassifiers xsi:type="ecore:EClass" name="Alert" eSuperTypes="#//BooleanCondition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Editable" eSuperTypes="#//ViewContent">
@@ -100,9 +106,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
         eType="#//Value" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Include" eSuperTypes="#//PageContent #//ViewContent #//Value">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Variable"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -129,4 +132,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CssClass" eSuperTypes="#//CssConfiguration"/>
   <eClassifiers xsi:type="ecore:EClass" name="CssId" eSuperTypes="#//CssConfiguration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Click" eSuperTypes="#//Clicker">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="click" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Include" eSuperTypes="#//GroupedView">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Variable"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -43,7 +43,7 @@
     <genClasses ecoreClass="WPage.ecore#//ButtonContent">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ButtonContent/include"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Click"/>
+    <genClasses ecoreClass="WPage.ecore#//Clicker"/>
     <genClasses ecoreClass="WPage.ecore#//IfElse"/>
     <genClasses ecoreClass="WPage.ecore#//If">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//If/ifAction"/>
@@ -54,6 +54,9 @@
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Action/pageDirection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/alert"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/script"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/advancedType"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//External">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//External/script"/>
@@ -90,9 +93,6 @@
     <genClasses ecoreClass="WPage.ecore#//Row">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Row/contents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Include">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Include/include"/>
-    </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Value">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Value/value"/>
     </genClasses>
@@ -115,5 +115,11 @@
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//CssClass"/>
     <genClasses ecoreClass="WPage.ecore#//CssId"/>
+    <genClasses ecoreClass="WPage.ecore#//Click">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Click/click"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Include">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Include/include"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

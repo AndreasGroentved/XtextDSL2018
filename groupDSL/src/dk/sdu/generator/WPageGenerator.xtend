@@ -3,35 +3,45 @@
  */
 package dk.sdu.generator
 
+import dk.sdu.wPage.Action
+import dk.sdu.wPage.AdvancedType
+import dk.sdu.wPage.Alert
+import dk.sdu.wPage.Boolean
+import dk.sdu.wPage.Button
+import dk.sdu.wPage.Click
+import dk.sdu.wPage.Css
+import dk.sdu.wPage.CssClass
+import dk.sdu.wPage.CssConfiguration
+import dk.sdu.wPage.CssId
+import dk.sdu.wPage.Dimension
+import dk.sdu.wPage.DisplayConfiguration
+import dk.sdu.wPage.GroupedView
+import dk.sdu.wPage.Header
+import dk.sdu.wPage.Height
+import dk.sdu.wPage.If
+import dk.sdu.wPage.Image
+import dk.sdu.wPage.Include
+import dk.sdu.wPage.Number
+import dk.sdu.wPage.Page
+import dk.sdu.wPage.Row
+import dk.sdu.wPage.Script
+import dk.sdu.wPage.Style
+import dk.sdu.wPage.Table
+import dk.sdu.wPage.Text
+import dk.sdu.wPage.Title
+import dk.sdu.wPage.Type
+import dk.sdu.wPage.Variable
+import dk.sdu.wPage.View
+import dk.sdu.wPage.ViewConfiguration
+import dk.sdu.wPage.Width
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
+import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import dk.sdu.wPage.Page
-import dk.sdu.wPage.Title
-import dk.sdu.wPage.GroupedView
-import dk.sdu.wPage.View
-import dk.sdu.wPage.Button
-import dk.sdu.wPage.Dimension
-import dk.sdu.wPage.Style
-import dk.sdu.wPage.CssClass
-import dk.sdu.wPage.CssId
-import dk.sdu.wPage.ViewConfiguration
-import dk.sdu.wPage.Height
-import dk.sdu.wPage.Width
-import dk.sdu.wPage.CssConfiguration
-import dk.sdu.wPage.Text
-import dk.sdu.wPage.Table
-import dk.sdu.wPage.DisplayConfiguration
-import dk.sdu.wPage.Header
-import dk.sdu.wPage.Row
-import dk.sdu.wPage.Image
-import dk.sdu.wPage.Click
-import java.util.List
-import java.util.ArrayList
-import dk.sdu.wPage.Variable
-import dk.sdu.wPage.AdvancedType
-import dk.sdu.wPage.Type
 
 /**
  * Generates code from your model files on save.
@@ -40,14 +50,25 @@ import dk.sdu.wPage.Type
  */
 class WPageGenerator extends AbstractGenerator {
 
+
+	//TODO if else
+	//TODO include in place of variables e.g. in view/button {text include a} + table
+	//TODO nesting views
+	//TODO fix terminals
+	//TODO editable text views
+	//TODO external
+	//TODO groupedviews - "+" with horizontal float left
+	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
+
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
-		
 		resource.allContents.filter(Page).forEach[generateHtmlPageFile(fsa)]
 	}
 	
 	var List<String> pageNames = new ArrayList;
 	
+	val Map<String,Variable> mapOfVariables = new HashMap
 	
 	
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
@@ -59,9 +80,9 @@ class WPageGenerator extends AbstractGenerator {
 		val size = pageNames.size 
 		val currentIndex = pageNames.indexOf(page.name)
 		
-		val previous = "prev(){window.location.href = '"+  pageNames.get((currentIndex-1).mod(size))     + ".html'} "
-		val next = "next(){window.location.href = '"+  pageNames.get((currentIndex+1).mod(size))     + ".html'} "
-		val goTo = "goto(pageName){window.location.href = 'pageName.concat('.html')'}"
+		val previous = "function prev(){window.location.href = '"+  pageNames.get((currentIndex-1).mod(size))     + ".html'} "
+		val next = "function next(){window.location.href = '"+  pageNames.get((currentIndex+1).mod(size))     + ".html'} "
+		val goTo = "function goto(pageName){window.location.href = \" ' \" + pageName.concat('.html') + \" ' \"}"
 		
 		previous + next + goTo
 	}
@@ -70,11 +91,23 @@ class WPageGenerator extends AbstractGenerator {
 		val vars = page.pagecontents.filter(Variable)
 		if(vars.isEmpty()) return ''''''
 		
-		vars.join("; ")["var " + it.name + " = " +  if(it.value instanceof AdvancedType) (it.value as AdvancedType).generateAdvancedType 
-			else (it.value as Type).value
+		vars.forEach[
+			mapOfVariables.put(it.name,it)
 		]
+		
+		
+		vars.join(" ")["var " + it.name + " = " +  
+			it.getVariable
+		] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
+	def getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType 
+			else (variable.value as Type).simpleVar + ";"»'''
+	
+	
+	def dispatch simpleVar(Text text) ''''«text.value»' '''
+	def dispatch simpleVar(Boolean text) '''«text.value»'''
+	def dispatch simpleVar(Number text) '''«text.value»'''
 	
 	
 	def int mod(int number, int modulo){
@@ -89,24 +122,37 @@ class WPageGenerator extends AbstractGenerator {
 				«page.generateNavigationMethods»
 				«page.generateVars»
 			</script>
+			<style>
+			 	«page.pagecontents.filter(Css).generateCssFiles»
+			</style>
+		
 			«IF page.pagecontents.exists[it instanceof Title]»
 				«««TODO: alternative to find first
-				<title>«page.pagecontents.filter(Title).findFirst[it instanceof Title].value»</title>
+				<title>«page.pagecontents.filter(Title).get(0).value»</title>  «««Only one can exists
 			«ENDIF»
 		</header>
 		<body>
-			«FOR pagecontent:page.pagecontents.filter(GroupedView)»
-			«pagecontent.generatePageBodyContent»
+			«FOR pagecontent:page.pagecontents.filter[it instanceof GroupedView || it instanceof  Include]»
+			« (pagecontent as GroupedView).generatePageBodyContent»
 			«ENDFOR»
 		</body>
 	</html>	
 	'''
 	
+	def generateCssFiles(Iterable<Css> css) '''«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\"" »''' 
+	
 	def generatePageBodyContent(GroupedView groupedView) '''
-		«FOR g: groupedView.group»
-		«g.generateAdvancedType»
-		«ENDFOR»
+		«IF groupedView instanceof Include»
+		«groupedView.include.getVariable»
+		«ELSE »	
+			«FOR g: groupedView.group»
+				«g.generateAdvancedType»
+			«ENDFOR»
+		«ENDIF»			
 	'''
+	
+	
+	
 	
 	def dispatch generateAdvancedType(View view) '''
 		<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
@@ -125,19 +171,51 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def dispatch generateAdvancedType(Button button) '''
 		<button type="button"«
-		button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+		button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»
+		«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[it.buttonEvents] »«ENDIF»>
 		«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»
-		«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[] »«ENDIF»
 		</button>
 	'''
 	
-	def getButtonEvents(Click click) {
-		//val start = "onClick ='" + click. 
-		
-		
-		
-		
+	
+	def CharSequence getButtonEvents(Click click) { //Limited to alert and navigation
+		if(click.click  instanceof Action ){
+			(click.click as Action).buttonAction 
+		} else if(click.click instanceof If){
+			
+		}
 	}
+	
+	
+	def buttonAction(Action action){
+		val start = "onClick ='"
+		val end = "'"
+		start +	action.pageDirection.directionString+getScriptCall(action.script)+action.alert.getAlert	+end
+	}
+	
+	def getAlert(Alert alert) {
+		if(alert===null) ""
+		else  "alert(\"" + alert.value + "\")"
+	}
+	
+	def getScriptCall(Script script ){
+		if(script===null) return ""
+		val methodStart = script.name +"("
+		val methodEnd = ")"
+		val middle = script.parameters.join(",")[it.value]
+		methodStart + middle + methodEnd
+	}
+	
+	def directionString(String direction)'''«
+		if(direction === null) return ""
+		else
+			switch (direction){
+				case "next" : "next()"
+				case "previous" : "prev()"
+				case  direction.startsWith("goto") : "goto(" + direction.replace("goto","") + ")"
+				default: "next"
+			}
+	 »'''
 	
 	def generateDisplayConfiguration(Iterable<DisplayConfiguration> configurations) '''«configurations.filter(CssConfiguration).join(" ")[it.generateCssConfiguration]» style="«configurations.filter(ViewConfiguration).join(" ")[it.generateViewConfiguration]»"'''
 	

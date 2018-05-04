@@ -34,7 +34,7 @@ Variable:
 	'var' name=ID (value=Type | value=AdvancedType)
 ;
 
-Type: 
+Type: 	
 	Text | Number | Boolean
 ;
 
@@ -43,7 +43,7 @@ Text returns Type:
 ;
 
 Number returns Type: 
-	{Number} 'number' value=FLOAT
+	{Number} 'number' value= STRING
 ;
 
 Boolean returns Type: 
@@ -107,11 +107,11 @@ CssId returns CssConfiguration:
 ;
 
 ButtonContent: 
-	Click | DisplayConfiguration | Text | 'text' include=Include
+	Clicker | DisplayConfiguration | Text | 'text' include=Include
 ;
 
-Click: 
-	'click' '->' (IfElse | Action)
+Clicker: 
+	{Click} 'click' '->'  click = (IfElse |Action)
 ;
 
 IfElse: 
@@ -119,7 +119,7 @@ IfElse:
 ;
 
 If: 
-	'if' ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
+	{If} ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
 ;
 
 AndOr: 
@@ -127,7 +127,7 @@ AndOr:
 ;
 
 Action: 
-	pageDirection=PageDirection | Alert | Script | AdvancedType 
+	 {Action} (pageDirection=PageDirection | alert=Alert | script=Script | advancedType=AdvancedType) 
 ;
 
 PageDirection:
@@ -159,7 +159,7 @@ Image:
 ;
 
 BooleanCondition: 
-	left=Operand operator=EqualityOperator right=Operand | Script
+	left=Operand operator=EqualityOperator right=Operand | Script | Alert
 ;
 
 Operand: 
@@ -190,13 +190,15 @@ Row:
 	'row' contents+=Value+
 ;
 
-Include: 
-	'include' include=[Variable]
+Include returns GroupedView: 
+  {Include}	'include' include=[Variable]
 ;
 
 Value: 
 	value=STRING | Include
 ;
 
-
-terminal FLOAT: INT '.' INT;
+@Override
+terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
+//terminal FLOAT:  /*INT |('0'..'9')+('.'('0'..'9')*)?*/ STRING;
+/*terminal CSSCSS: (STRING)'.css' STRING;*/
