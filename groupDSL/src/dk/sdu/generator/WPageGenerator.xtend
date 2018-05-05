@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import dk.sdu.wPage.Form
 
 /**
  * Generates code from your model files on save.
@@ -74,6 +75,7 @@ class WPageGenerator extends AbstractGenerator {
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
 		val pageName =page.name + ".html"
 		fsa.generateFile(pageName, page.generateHTML)
+
 	}
 	
 	def generateNavigationMethods(Page page){
@@ -135,9 +137,12 @@ class WPageGenerator extends AbstractGenerator {
 			«FOR pagecontent:page.pagecontents.filter[it instanceof GroupedView || it instanceof  Include]»
 			« (pagecontent as GroupedView).generatePageBodyContent»
 			«ENDFOR»
+
 		</body>
 	</html>	
 	'''
+	
+
 	
 	def generateCssFiles(Iterable<Css> css) '''«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\"" »''' 
 	
@@ -162,10 +167,20 @@ class WPageGenerator extends AbstractGenerator {
 			«FOR t:view.contents.filter(Text)»
 			«t.generateText»
 			«ENDFOR»
+			«FOR i:view.contents.filter(Form)»
+		    «i.generateForm»
+		    «ENDFOR»
+			
 		</div>
 	'''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
+	
+	def generateForm(Form form)'''
+	<form action="#">
+	  <input type="" name="" value="">
+	</form> 
+	'''
 	
 	def generateText(Text text) '''<p>«text.value»</p>'''
 	
@@ -256,6 +271,7 @@ class WPageGenerator extends AbstractGenerator {
 		</table>
 	'''
 	
+	
 	def generateTableHeader(Header header) '''
 	<tr>
 		«FOR h: header.contents»
@@ -273,4 +289,17 @@ class WPageGenerator extends AbstractGenerator {
 		«ENDFOR»
 	</tr>
 	'''
+	
+		def dispatch generateAdvancedType(Form form)'''
+	<form «form.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+	  <input type="text" value="
+	  «IF form.contents.exists[it instanceof Text]»«form.contents.filter(Text).findFirst[it instanceof Text].value»
+	  «ENDIF»
+	  
+	  ">
+	</form> 
+	'''
+	
+
+	
 }

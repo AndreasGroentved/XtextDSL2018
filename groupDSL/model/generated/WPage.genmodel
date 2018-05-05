@@ -75,6 +75,10 @@
     <genClasses ecoreClass="WPage.ecore#//Image">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Image/value"/>
     </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//Form">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Form/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//FormContent"/>
     <genClasses ecoreClass="WPage.ecore#//BooleanCondition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanCondition/operator"/>

@@ -15,7 +15,7 @@ Page:
 ;
 
 PageContent: 
-	Title | Css | Variable | External | Include | GroupedView | IfElse
+	Title | Css | Variable | External | Include | GroupedView | IfElse 
 ;
 
 Title: 
@@ -51,7 +51,7 @@ Boolean returns Type:
 ;
 
 AdvancedType: 
-	View | Button | Table
+	View | Button | Table | Form
 ;
 
 View returns AdvancedType: 
@@ -61,6 +61,8 @@ View returns AdvancedType:
 Button returns AdvancedType: 
 	{Button} 'button' '{' contents += ButtonContent*  '}'
 ;
+
+
 
 DisplayConfiguration:
 	ViewConfiguration | CssConfiguration
@@ -110,6 +112,8 @@ ButtonContent:
 	Clicker | DisplayConfiguration | Text | 'text' include=Include
 ;
 
+
+
 Clicker: 
 	{Click} 'click' '->'  click = (IfElse |Action)
 ;
@@ -151,12 +155,22 @@ Editable:
 ;
 
 ViewContent: 
-	DisplayConfiguration | Text | Image | Table | Include | Editable
+	DisplayConfiguration | Text | Image | Table | Include | Editable 
 ;
 
 Image: 
 	'image' value=STRING 
 ;
+
+Form:
+	{Form} 'form' '{' contents += FormContent* '}'
+;
+
+FormContent:
+	DisplayConfiguration | Text 
+;
+
+
 
 BooleanCondition: 
 	left=Operand operator=EqualityOperator right=Operand | Script | Alert
@@ -175,7 +189,7 @@ Table:
 ;
 
 TableContent: 
-	DisplayConfiguration | TableDimension | Header | Row
+	DisplayConfiguration | TableDimension | Header | Row 
 ;
 
 TableDimension: 
@@ -189,6 +203,7 @@ Header:
 Row: 
 	'row' contents+=Value+
 ;
+
 
 Include returns GroupedView: 
   {Include}	'include' include=[Variable]

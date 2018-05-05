@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="dk.sdu.wPage.ButtonContent" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/ButtonContent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="153" x="636" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" language="java" name="dk.sdu.wPage.CssId" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/CssId.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="788" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="3" language="java" name="dk.sdu.wPage.Height" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Height.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="996" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="dk.sdu.wPage.Number" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Number.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="282" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="5" language="java" name="dk.sdu.wPage.TableDimension" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/TableDimension.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="2803" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="dk.sdu.wPage.ViewConfiguration" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/ViewConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="148" x="744" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="dk.sdu.wPage.Page" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Page.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="239" x="1502" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="8" language="java" name="dk.sdu.wPage.Contents" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Contents.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="185" x="70" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="dk.sdu.wPage.Dimension" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Dimension.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="217" x="282" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="dk.sdu.wPage.Include" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Include.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="158" x="1304" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="11" language="java" name="dk.sdu.wPage.Script" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Script.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="187" x="1436" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="12" language="java" name="dk.sdu.wPage.Variable" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Variable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="182" x="1781" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="13" language="java" name="dk.sdu.wPage.Alert" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Alert.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="1259" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="14" language="java" name="dk.sdu.wPage.Row" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Row.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="173" x="2980" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="15" language="java" name="dk.sdu.wPage.Editable" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Editable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="151" x="70" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="16" language="java" name="dk.sdu.wPage.ViewContent" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/ViewContent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="382" y="108"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="17" language="java" name="dk.sdu.wPage.Header" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Header.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="173" x="3193" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="18" language="java" name="dk.sdu.wPage.Title" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Title.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="2024" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="19" language="java" name="dk.sdu.wPage.Click" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Click.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="842" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="20" language="java" name="dk.sdu.wPage.Style" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Style.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="209" x="539" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="21" language="java" name="dk.sdu.wPage.DisplayConfiguration" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/DisplayConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="166" x="636" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="22" language="java" name="dk.sdu.wPage.GroupedView" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/GroupedView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="208" x="2201" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="23" language="java" name="dk.sdu.wPage.IfElse" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/IfElse.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="1984" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="24" language="java" name="dk.sdu.wPage.Button" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Button.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="220" x="966" y="1002"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="25" language="java" name="dk.sdu.wPage.Css" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Css.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="2449" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="26" language="java" name="dk.sdu.wPage.Action" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Action.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="183" x="1158" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="27" language="java" name="dk.sdu.wPage.Text" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Text.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="436" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="28" language="java" name="dk.sdu.wPage.DimensionValue" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/DimensionValue.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="1073" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="29" language="java" name="dk.sdu.wPage.Content" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Content.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="139" x="1642" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="30" language="java" name="dk.sdu.wPage.Table" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Table.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="235" y="1007"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="31" language="java" name="dk.sdu.wPage.PageContent" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/PageContent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="2024" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="32" language="java" name="dk.sdu.wPage.External" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/External.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="2626" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="33" language="java" name="dk.sdu.wPage.Width" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Width.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="1150" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="34" language="java" name="dk.sdu.wPage.View" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/View.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="211" x="1226" y="1002"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="35" language="java" name="dk.sdu.wPage.AdvancedType" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/AdvancedType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="123" x="1096" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="36" language="java" name="dk.sdu.wPage.Value" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Value.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="1304" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="37" language="java" name="dk.sdu.wPage.BooleanCondition" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/BooleanCondition.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="173" width="155" x="1436" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="38" language="java" name="dk.sdu.wPage.Image" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Image.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="282" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="39" language="java" name="dk.sdu.wPage.Type" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Type.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="137" x="459" y="399"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="40" language="java" name="dk.sdu.wPage.TableContent" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/TableContent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2842" y="152"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="41" language="java" name="dk.sdu.wPage.Boolean" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/Boolean.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="590" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="42" language="java" name="dk.sdu.wPage.CssConfiguration" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/CssConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="142" x="932" y="540"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="43" language="java" name="dk.sdu.wPage.CssClass" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/CssClass.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="65" width="114" x="942" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="44" language="java" name="dk.sdu.wPage.If" project="groupDSL" 
+    file="/groupDSL/src-gen/dk/sdu/wPage/If.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="281" x="1984" y="753"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="45">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="47">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="40"/>  
+  </generalization>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="40"/>  
+  </generalization>  
+  <generalization id="49">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="26"/>  
+  </generalization>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="42"/>  
+  </generalization>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <generalization id="55">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="56">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="42"/>  
+  </generalization>  
+  <generalization id="57">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="40"/>  
+  </generalization>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="21"/>  
+  </generalization>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <generalization id="63">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="26"/>  
+  </generalization>  
+  <generalization id="64">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="26"/>  
+  </generalization>  
+  <generalization id="69">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <generalization id="71">    
+    <bendpoint x="251" y="753"/>    
+    <bendpoint x="251" y="540"/>    
+    <bendpoint x="251" y="399"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="72">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="73">    
+    <bendpoint x="1993" y="399"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="74">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="75">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <generalization id="78">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="79">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="39"/>  
+  </generalization>  
+  <generalization id="81">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="82">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="83">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="84">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <generalization id="85">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="86">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="40"/>  
+  </generalization>  
+  <generalization id="87">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="88">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
