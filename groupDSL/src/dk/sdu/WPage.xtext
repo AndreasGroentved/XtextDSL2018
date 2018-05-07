@@ -51,7 +51,7 @@ Boolean returns Type:
 ;
 
 AdvancedType: 
-	View | Button | Table | Form
+	View | Button | Table
 ;
 
 View returns AdvancedType: 
@@ -151,7 +151,10 @@ Alert:
 ;
 
 Editable:
-	'editable' editable=STRING
+	'editable' value=STRING
+		
+	
+	
 ;
 
 ViewContent: 
@@ -160,14 +163,6 @@ ViewContent:
 
 Image: 
 	'image' value=STRING 
-;
-
-Form:
-	{Form} 'form' '{' contents += FormContent* '}'
-;
-
-FormContent:
-	DisplayConfiguration | Text 
 ;
 
 

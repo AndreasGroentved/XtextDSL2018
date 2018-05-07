@@ -27,11 +27,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ButtonContent #//ViewContent #//FormContent">
+  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ButtonContent #//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AdvancedType"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DisplayConfiguration" eSuperTypes="#//ButtonContent #//ViewContent #//FormContent #//TableContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DisplayConfiguration" eSuperTypes="#//ButtonContent #//ViewContent #//TableContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ViewConfiguration" eSuperTypes="#//DisplayConfiguration"/>
   <eClassifiers xsi:type="ecore:EClass" name="DimensionValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -79,17 +79,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Editable" eSuperTypes="#//ViewContent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ViewContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Form" eSuperTypes="#//AdvancedType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-        eType="#//FormContent" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FormContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanCondition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

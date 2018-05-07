@@ -42,7 +42,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import dk.sdu.wPage.Form
+import dk.sdu.wPage.Editable
 
 /**
  * Generates code from your model files on save.
@@ -56,10 +56,12 @@ class WPageGenerator extends AbstractGenerator {
 	//TODO include in place of variables e.g. in view/button {text include a} + table
 	//TODO nesting views
 	//TODO fix terminals
-	//TODO editable text views
 	//TODO external
 	//TODO groupedviews - "+" with horizontal float left
 	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
+	
+	//TODO editable text views
+	
 
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -167,22 +169,37 @@ class WPageGenerator extends AbstractGenerator {
 			«FOR t:view.contents.filter(Text)»
 			«t.generateText»
 			«ENDFOR»
-			«FOR i:view.contents.filter(Form)»
-		    «i.generateForm»
-		    «ENDFOR»
+			
+			«IF view.contents.exists[it instanceof Editable]»
+			«FOR t:view.contents.filter(Editable)»
+			«t.generateEditable»
+			«ENDFOR»
+			
+				  
+			«ENDIF»
 			
 		</div>
 	'''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
 	
-	def generateForm(Form form)'''
-	<form action="#">
-	  <input type="" name="" value="">
-	</form> 
+
+	
+	def generateText(Text text) '''
+	<p>«text.value»</p>
+	
 	'''
 	
-	def generateText(Text text) '''<p>«text.value»</p>'''
+	def generateEditable(Editable editable)'''
+	
+	<form>
+	
+	  <input type="text" value="«editable.value»">
+	  
+	  </form> 
+	
+	  
+	'''
 	
 	def dispatch generateAdvancedType(Button button) '''
 		<button type="button"«
@@ -290,15 +307,7 @@ class WPageGenerator extends AbstractGenerator {
 	</tr>
 	'''
 	
-		def dispatch generateAdvancedType(Form form)'''
-	<form «form.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
-	  <input type="text" value="
-	  «IF form.contents.exists[it instanceof Text]»«form.contents.filter(Text).findFirst[it instanceof Text].value»
-	  «ENDIF»
-	  
-	  ">
-	</form> 
-	'''
+
 	
 
 	
