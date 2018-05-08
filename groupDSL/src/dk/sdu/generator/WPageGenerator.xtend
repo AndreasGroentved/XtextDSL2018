@@ -54,16 +54,15 @@ class WPageGenerator extends AbstractGenerator {
 
 	//TODO if else
 	//TODO include in place of variables e.g. in view/button {text include a} + table
-	//TODO nesting views
 	//TODO fix terminals
 	//TODO external
-	//TODO groupedviews - "+" with horizontal float left
 	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
 	
-	//TODO editable text views
+	// TODAY:
+		 //TODO groupedviews - "+" with horizontal float left
+		//TODO nesting views: div under div under div 
+		
 	
-
-
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
 		resource.allContents.filter(Page).forEach[generateHtmlPageFile(fsa)]
@@ -128,6 +127,7 @@ class WPageGenerator extends AbstractGenerator {
 			</script>
 			<style>
 			 	«page.pagecontents.filter(Css).generateCssFiles»
+			 	
 			</style>
 		
 			«IF page.pagecontents.exists[it instanceof Title]»
@@ -144,7 +144,6 @@ class WPageGenerator extends AbstractGenerator {
 	</html>	
 	'''
 	
-
 	
 	def generateCssFiles(Iterable<Css> css) '''«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\"" »''' 
 	
@@ -155,7 +154,10 @@ class WPageGenerator extends AbstractGenerator {
 			«FOR g: groupedView.group»
 				«g.generateAdvancedType»
 			«ENDFOR»
-		«ENDIF»			
+		«ENDIF»		
+		
+		
+		
 	'''
 	
 	
@@ -268,6 +270,7 @@ class WPageGenerator extends AbstractGenerator {
 			case "underline": "text-decoration:underline;"
 			case "horizontal": ""
 			case "vertical": ""
+			case "float":"float:right;"
 			default : ""
 		}»
 		«ENDFOR»

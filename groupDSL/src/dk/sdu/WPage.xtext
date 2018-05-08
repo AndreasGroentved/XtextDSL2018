@@ -51,8 +51,9 @@ Boolean returns Type:
 ;
 
 AdvancedType: 
-	View | Button | Table
+	View | Button | Table 
 ;
+
 
 View returns AdvancedType: 
 	{View} 'view' '{' contents+= ViewContent*  '}' 
@@ -93,7 +94,7 @@ Style returns ViewConfiguration:
 ;
 
 StyleDefinition: 
-	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline'
+	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline' | 'float' 
 ;
 
 CssConfiguration:
