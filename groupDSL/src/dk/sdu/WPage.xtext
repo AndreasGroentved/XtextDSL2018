@@ -39,11 +39,19 @@ Type:
 ;
 
 Text returns Type: 
-	{Text} 'text' value=STRING 
+	{Text} 'text' value=TextValue 
 ;
 
 Number returns Type: 
-	{Number} 'number' value= STRING
+	{Number} 'number' (value=Whole | value=Decimal)
+;
+
+Whole:
+	value = INT
+;
+
+Decimal:
+	value = FLOAT
 ;
 
 Boolean returns Type: 
@@ -54,7 +62,6 @@ AdvancedType:
 	View | Button | Table 
 ;
 
-
 View returns AdvancedType: 
 	{View} 'view' '{' contents+= ViewContent*  '}' 
 ;
@@ -62,8 +69,6 @@ View returns AdvancedType:
 Button returns AdvancedType: 
 	{Button} 'button' '{' contents += ButtonContent*  '}'
 ;
-
-
 
 DisplayConfiguration:
 	ViewConfiguration | CssConfiguration
@@ -94,7 +99,7 @@ Style returns ViewConfiguration:
 ;
 
 StyleDefinition: 
-	'horizontal' | 'vertical' | 'bold' | 'italic' | 'underline' | 'float' 
+	'bold' | 'italic' | 'underline' | 'float' 
 ;
 
 CssConfiguration:
@@ -110,25 +115,59 @@ CssId returns CssConfiguration:
 ;
 
 ButtonContent: 
-	Clicker | DisplayConfiguration | Text | 'text' include=Include
+	Clicker | DisplayConfiguration | Text
 ;
-
-
 
 Clicker: 
 	{Click} 'click' '->'  click = (IfElse |Action)
 ;
 
 IfElse: 
-	If '{' ifAction = Action '}' ( 'else' '{' elseAction = Action '}')?
+	'if' condition=LogicExp '{' ifAction = Action '}' ( 'else' '{' elseAction = Action '}')?
 ;
 
-If: 
-	{If} ifCondition=BooleanCondition ( op+=AndOr andOrConditions+=BooleanCondition)*  
+LogicExp returns Proposition:
+	Conjunction ('OR' {Disjunction.left=current} right=Conjunction)* 
 ;
 
-AndOr: 
-	'AND' | 'OR'
+Conjunction returns Proposition:
+	Condition ('AND' {Conjunction.left=current} right=Condition)*
+;
+
+Condition returns Proposition:
+	Comparison | Parenthesis
+;
+
+Comparison:
+	left=Exp op=RelationalOp right=Exp
+;
+
+RelationalOp:
+	'==' | '!=' | '<' | '>' | '<=' | '>=' 
+;
+
+Parenthesis:
+	'(' condition=LogicExp ')'
+;
+
+Exp returns Expression:
+	Factor ( ('+' {Add.left=current} | '-' {Sub.left=current}) right=Factor)*
+;
+
+Factor returns Expression:
+	Primitive ( ('*' {Mul.left=current} | '/' {Div.left=current}) right=Primitive)*
+;
+
+Primitive returns Expression:
+	Name | Number | bool=BooleanValue
+;
+
+Name: 
+	name=[Variable]
+;
+
+BooleanValue:
+	'true' | 'false'
 ;
 
 Action: 
@@ -144,7 +183,7 @@ External:
 ;
 
 Script: 
-	name=ID '(' ((parameters+=Value)','?)*  ')'
+	name=ID '(' ((parameters+=TextValue)','?)*  ')'
 ;
 
 Alert: 
@@ -153,9 +192,6 @@ Alert:
 
 Editable:
 	'editable' value=STRING
-		
-	
-	
 ;
 
 ViewContent: 
@@ -164,20 +200,6 @@ ViewContent:
 
 Image: 
 	'image' value=STRING 
-;
-
-
-
-BooleanCondition: 
-	left=Operand operator=EqualityOperator right=Operand | Script | Alert
-;
-
-Operand: 
-	ID | INT
-;
-
-EqualityOperator: 
-	'==' | '!=' | '<' | '>' | '<=' | '>=' 
 ;
 
 Table: 
@@ -200,16 +222,19 @@ Row:
 	'row' contents+=Value+
 ;
 
-
 Include returns GroupedView: 
   {Include}	'include' include=[Variable]
 ;
 
 Value: 
-	value=STRING | Include
+	{Value} value=STRING | Include | variable=[Variable]
+;
+
+TextValue:
+	{TextValue} string=STRING | variable=[Variable]
 ;
 
 @Override
 terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
-//terminal FLOAT:  /*INT |('0'..'9')+('.'('0'..'9')*)?*/ STRING;
+terminal FLOAT:  INT'.'INT;
 /*terminal CSSCSS: (STRING)'.css' STRING;*/

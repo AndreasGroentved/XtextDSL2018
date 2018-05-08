@@ -18,7 +18,6 @@ import dk.sdu.wPage.DisplayConfiguration
 import dk.sdu.wPage.GroupedView
 import dk.sdu.wPage.Header
 import dk.sdu.wPage.Height
-import dk.sdu.wPage.If
 import dk.sdu.wPage.Image
 import dk.sdu.wPage.Include
 import dk.sdu.wPage.Number
@@ -43,6 +42,19 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import dk.sdu.wPage.Editable
+import dk.sdu.wPage.TextValue
+import dk.sdu.wPage.IfElse
+import dk.sdu.wPage.Disjunction
+import dk.sdu.wPage.Conjunction
+import dk.sdu.wPage.Comparison
+import dk.sdu.wPage.Parenthesis
+import dk.sdu.wPage.Add
+import dk.sdu.wPage.Sub
+import dk.sdu.wPage.Mul
+import dk.sdu.wPage.Div
+import dk.sdu.wPage.Name
+import dk.sdu.wPage.Whole
+import dk.sdu.wPage.Decimal
 
 /**
  * Generates code from your model files on save.
@@ -51,18 +63,11 @@ import dk.sdu.wPage.Editable
  */
 class WPageGenerator extends AbstractGenerator {
 
-
-	//TODO if else
-	//TODO include in place of variables e.g. in view/button {text include a} + table
 	//TODO fix terminals
 	//TODO external
+	//TODO nesting views: div under div under div
 	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
-	
-	// TODAY:
-		 //TODO groupedviews - "+" with horizontal float left
-		//TODO nesting views: div under div under div 
-		
-	
+	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
 		resource.allContents.filter(Page).forEach[generateHtmlPageFile(fsa)]
@@ -72,19 +77,17 @@ class WPageGenerator extends AbstractGenerator {
 	
 	val Map<String,Variable> mapOfVariables = new HashMap
 	
-	
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
 		val pageName =page.name + ".html"
 		fsa.generateFile(pageName, page.generateHTML)
-
 	}
 	
 	def generateNavigationMethods(Page page){
 		val size = pageNames.size 
 		val currentIndex = pageNames.indexOf(page.name)
 		
-		val previous = "function prev(){window.location.href = '"+  pageNames.get((currentIndex-1).mod(size))     + ".html'} "
-		val next = "function next(){window.location.href = '"+  pageNames.get((currentIndex+1).mod(size))     + ".html'} "
+		val previous = "function prev(){window.location.href = '" + pageNames.get((currentIndex-1).mod(size)) + ".html'} "
+		val next = "function next(){window.location.href = '" + pageNames.get((currentIndex+1).mod(size)) + ".html'} "
 		val goTo = "function goto(pageName){window.location.href = \" ' \" + pageName.concat('.html') + \" ' \"}"
 		
 		previous + next + goTo
@@ -98,7 +101,6 @@ class WPageGenerator extends AbstractGenerator {
 			mapOfVariables.put(it.name,it)
 		]
 		
-		
 		vars.join(" ")["var " + it.name + " = " +  
 			it.getVariable
 		] + " var _current = " + pageNames.indexOf(page.name) +";"
@@ -107,119 +109,168 @@ class WPageGenerator extends AbstractGenerator {
 	def getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType 
 			else (variable.value as Type).simpleVar + ";"»'''
 	
-	
-	def dispatch simpleVar(Text text) ''''«text.value»' '''
+	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue»' '''	
 	def dispatch simpleVar(Boolean text) '''«text.value»'''
 	def dispatch simpleVar(Number text) '''«text.value»'''
 	
+	def generateTextValue(TextValue textValue) '''
+		«IF null !== textValue.string»
+		«textValue.string»
+		«ELSEIF null !== textValue.variable»
+		«(mapOfVariables.get(textValue.variable.name).value as Text).value.string»
+		«ENDIF»
+	'''
 	
 	def int mod(int number, int modulo){
-		
 		(number % modulo + modulo) % modulo
-	} 
+	}
 	
 	def generateHTML(Page page) '''
 	<html>
 		<header>
-			<script>
-				«page.generateNavigationMethods»
-				«page.generateVars»
-			</script>
-			<style>
-			 	«page.pagecontents.filter(Css).generateCssFiles»
-			 	
-			</style>
-		
 			«IF page.pagecontents.exists[it instanceof Title]»
 				«««TODO: alternative to find first
 				<title>«page.pagecontents.filter(Title).get(0).value»</title>  «««Only one can exists
 			«ENDIF»
+			<script>
+				«page.generateNavigationMethods»
+				«page.generateVars»
+			</script>
+			«page.pagecontents.filter(Css).generateCssFiles»
 		</header>
 		<body>
 			«FOR pagecontent:page.pagecontents.filter[it instanceof GroupedView || it instanceof  Include]»
-			« (pagecontent as GroupedView).generatePageBodyContent»
+				«(pagecontent as GroupedView).generatePageBodyContent»
 			«ENDFOR»
-
 		</body>
 	</html>	
 	'''
 	
-	
 	def generateCssFiles(Iterable<Css> css) '''«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\"" »''' 
 	
 	def generatePageBodyContent(GroupedView groupedView) '''
+		<div>
 		«IF groupedView instanceof Include»
-		«groupedView.include.getVariable»
-		«ELSE »	
+			«groupedView.include.getVariable»
+		«ELSE»
 			«FOR g: groupedView.group»
-				«g.generateAdvancedType»
+				«IF groupedView.group.size > 1»
+				<div style="display:inline-block">
+				«ENDIF»
+					«g.generateAdvancedType»
+				«IF groupedView.group.size > 1»
+				</div>
+				«ENDIF»
 			«ENDFOR»
-		«ENDIF»		
-		
-		
-		
+		«ENDIF»
+		</div>
 	'''
 	
-	
-	
-	
 	def dispatch generateAdvancedType(View view) '''
-		<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
-			«FOR i:view.contents.filter(Image)»
+	<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
+		«FOR i:view.contents.filter(Image)»
 			«i.generateImage»
-			«ENDFOR»
-			«FOR t:view.contents.filter(Text)»
+		«ENDFOR»
+		«FOR t:view.contents.filter(Text)»
 			«t.generateText»
-			«ENDFOR»
-			
-			«IF view.contents.exists[it instanceof Editable]»
+		«ENDFOR»
+		«IF view.contents.exists[it instanceof Editable]»
 			«FOR t:view.contents.filter(Editable)»
-			«t.generateEditable»
+				«t.generateEditable»
 			«ENDFOR»
-			
-				  
-			«ENDIF»
-			
-		</div>
+		«ENDIF»
+	</div>
 	'''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
 	
-
-	
 	def generateText(Text text) '''
-	<p>«text.value»</p>
-	
+	<p>«text.value.generateTextValue»</p>
 	'''
 	
 	def generateEditable(Editable editable)'''
-	
 	<form>
-	
-	  <input type="text" value="«editable.value»">
-	  
-	  </form> 
-	
-	  
+		<input type="text" value="«editable.value»">
+	</form>
 	'''
 	
 	def dispatch generateAdvancedType(Button button) '''
-		<button type="button"«
-		button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»
-		«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[it.buttonEvents] »«ENDIF»>
-		«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].value»«ENDIF»
-		</button>
+	<button type="button"«
+	button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»
+	«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[it.buttonEvents] »«ENDIF»>
+	«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].generateText»«ENDIF»
+	</button>
 	'''
-	
 	
 	def CharSequence getButtonEvents(Click click) { //Limited to alert and navigation
 		if(click.click  instanceof Action ){
 			(click.click as Action).buttonAction 
-		} else if(click.click instanceof If){
-			
+		} else if(click.click instanceof IfElse){
+			(click.click as IfElse).handleIfElse
 		}
 	}
 	
+	def CharSequence handleIfElse(IfElse ifElse) '''
+	«ifElse.condition.computeBooleanExpression»
+	'''
+	
+	def dispatch boolean computeBooleanExpression(Disjunction disjunction) {
+		disjunction.left.computeBooleanExpression || disjunction.right.computeBooleanExpression
+	}
+	
+	def dispatch boolean computeBooleanExpression(Conjunction conjunction) {
+		conjunction.left.computeBooleanExpression && conjunction.right.computeBooleanExpression
+	}
+	
+	def dispatch boolean computeBooleanExpression(Comparison booleanExp) {
+		val left = booleanExp.left.computeExp
+		val right = booleanExp.right.computeExp
+		switch (booleanExp.op) {
+			case '==': left == right
+			case '!=': left != right
+			case '<': left < right
+			case '>': left > right
+			case '<=': left <= right
+			case '>=': left >= right
+			default: false
+		}
+	}
+	
+	def dispatch boolean computeBooleanExpression(Parenthesis booleanExp) {
+		booleanExp.condition.computeBooleanExpression
+	}
+	
+	def dispatch double computeExp(Add exp) {
+		exp.left.computeExp + exp.right.computeExp
+	}
+	
+	def dispatch double computeExp(Sub exp) {
+		exp.left.computeExp - exp.right.computeExp
+	}
+	
+	def dispatch double computeExp(Mul exp) {
+		exp.left.computeExp * exp.right.computeExp
+	}
+	
+	def dispatch double computeExp(Div exp) {
+		exp.left.computeExp / exp.right.computeExp
+	}
+		
+	def dispatch double computeExp(Number num) {
+		num.value.computeValue
+	}
+	
+	def dispatch double computeValue(Whole whole) {
+		whole.value
+	}
+	
+	def dispatch double computeValue(Decimal decimal) {
+		Double.parseDouble(decimal.value)
+	}
+	
+	def dispatch double computeExp(Name variable) {
+		mapOfVariables.get(variable.name).value.computeValue
+	}
 	
 	def buttonAction(Action action){
 		val start = "onClick ='"
@@ -236,7 +287,7 @@ class WPageGenerator extends AbstractGenerator {
 		if(script===null) return ""
 		val methodStart = script.name +"("
 		val methodEnd = ")"
-		val middle = script.parameters.join(",")[it.value]
+		val middle = script.parameters.join(",")[it.generateTextValue]
 		methodStart + middle + methodEnd
 	}
 	
@@ -268,8 +319,6 @@ class WPageGenerator extends AbstractGenerator {
 			case "bold": "font-weight:bold;"
 			case "italic": "font-style:italic;"
 			case "underline": "text-decoration:underline;"
-			case "horizontal": ""
-			case "vertical": ""
 			case "float":"float:right;"
 			default : ""
 		}»
@@ -291,7 +340,6 @@ class WPageGenerator extends AbstractGenerator {
 		</table>
 	'''
 	
-	
 	def generateTableHeader(Header header) '''
 	<tr>
 		«FOR h: header.contents»
@@ -309,9 +357,5 @@ class WPageGenerator extends AbstractGenerator {
 		«ENDFOR»
 	</tr>
 	'''
-	
 
-	
-
-	
 }
