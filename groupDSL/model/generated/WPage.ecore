@@ -10,20 +10,21 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Page" eSuperTypes="#//Content">
     <eStructuralFeatures xsi:type="ecore:EReference" name="pagecontents" upperBound="-1"
-        eType="#//PageContent" containment="true"/>
+        eType="#//LayoutContent" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PageContent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Title" eSuperTypes="#//PageContent">
+  <eClassifiers xsi:type="ecore:EClass" name="LayoutContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Title" eSuperTypes="#//LayoutContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//TextValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Css" eSuperTypes="#//LayoutContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Css" eSuperTypes="#//PageContent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GroupedView" eSuperTypes="#//PageContent #//ViewContent #//Value">
+  <eClassifiers xsi:type="ecore:EClass" name="GroupedView" eSuperTypes="#//LayoutContent #//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="group" upperBound="-1"
         eType="#//AdvancedType" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//Content #//PageContent">
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//Content #//LayoutContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
@@ -45,7 +46,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ButtonContent"/>
   <eClassifiers xsi:type="ecore:EClass" name="Clicker" eSuperTypes="#//ButtonContent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IfElse" eSuperTypes="#//PageContent">
+  <eClassifiers xsi:type="ecore:EClass" name="IfElse" eSuperTypes="#//LayoutContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Proposition"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ifAction" eType="#//Action"
@@ -79,8 +80,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="advancedType" eType="#//AdvancedType"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Include"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="External" eSuperTypes="#//PageContent">
+  <eClassifiers xsi:type="ecore:EClass" name="External" eSuperTypes="#//LayoutContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="script" eType="#//Script"
         containment="true"/>
   </eClassifiers>
@@ -90,7 +93,8 @@
         eType="#//TextValue" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Alert">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//TextValue"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Editable" eSuperTypes="#//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -99,7 +103,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//ViewContent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//AdvancedType #//ViewContent">
+  <eClassifiers xsi:type="ecore:EClass" name="Table" eSuperTypes="#//AdvancedType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
         eType="#//TableContent" containment="true"/>
   </eClassifiers>
@@ -109,15 +113,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Header" eSuperTypes="#//TableContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-        eType="#//Value" containment="true"/>
+        eType="#//TextValue" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Row" eSuperTypes="#//TableContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-        eType="#//Value" containment="true"/>
+        eType="#//TextValue" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Include" eSuperTypes="#//LayoutContent #//ViewContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Variable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TextValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -193,8 +196,5 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Include" eSuperTypes="#//GroupedView">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="include" eType="#//Variable"/>
   </eClassifiers>
 </ecore:EPackage>

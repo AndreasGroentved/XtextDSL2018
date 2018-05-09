@@ -14,12 +14,12 @@ Page:
 	'page' name=STRING '{' pagecontents += PageContent* '}'
 ;
 
-PageContent: 
+PageContent returns LayoutContent: 
 	Title | Css | Variable | External | Include | GroupedView | IfElse 
 ;
 
 Title: 
-	'title' value=STRING
+	'title' value=TextValue
 ;
 
 Css: 
@@ -139,7 +139,7 @@ Condition returns Proposition:
 ;
 
 Comparison:
-	left=Exp op=RelationalOp right=Exp
+	left=Exp (op=RelationalOp right=Exp)?
 ;
 
 RelationalOp:
@@ -171,7 +171,7 @@ BooleanValue:
 ;
 
 Action: 
-	 {Action} (pageDirection=PageDirection | alert=Alert | script=Script | advancedType=AdvancedType) 
+	 {Action} (pageDirection=PageDirection | alert=Alert | script=Script | advancedType=AdvancedType | include = Include) 
 ;
 
 PageDirection:
@@ -187,7 +187,7 @@ Script:
 ;
 
 Alert: 
-	'alert' value=STRING 
+	'alert' value=TextValue
 ;
 
 Editable:
@@ -195,7 +195,7 @@ Editable:
 ;
 
 ViewContent: 
-	DisplayConfiguration | Text | Image | Table | Include | Editable 
+	DisplayConfiguration | Text | Image | Include | Editable  | GroupedView
 ;
 
 Image: 
@@ -215,19 +215,15 @@ TableDimension:
 ;
 
 Header: 
-	'header' contents+=Value+
+	'header' contents+=TextValue+
 ;
 
 Row: 
-	'row' contents+=Value+
+	'row' contents+=TextValue+
 ;
 
-Include returns GroupedView: 
+Include: 
   {Include}	'include' include=[Variable]
-;
-
-Value: 
-	{Value} value=STRING | Include | variable=[Variable]
 ;
 
 TextValue:
@@ -235,6 +231,6 @@ TextValue:
 ;
 
 @Override
-terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
+terminal SL_COMMENT: '#' !('\n'|'\r')* ('\r'? '\n')?;
 terminal FLOAT:  INT'.'INT;
-/*terminal CSSCSS: (STRING)'.css' STRING;*/
+terminal CSSCSS: '"' (STRING)*'.css' '"';

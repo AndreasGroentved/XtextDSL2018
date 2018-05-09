@@ -15,9 +15,9 @@
     <genClasses ecoreClass="WPage.ecore#//Page">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Page/pagecontents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//PageContent"/>
+    <genClasses ecoreClass="WPage.ecore#//LayoutContent"/>
     <genClasses ecoreClass="WPage.ecore#//Title">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Title/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Title/value"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Css">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Css/value"/>
@@ -71,6 +71,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/alert"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/script"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/advancedType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/include"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//External">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//External/script"/>
@@ -80,7 +81,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Script/parameters"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Alert">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Alert/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Alert/value"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Editable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Editable/value"/>
@@ -102,9 +103,8 @@
     <genClasses ecoreClass="WPage.ecore#//Row">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Row/contents"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Value">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Value/value"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Value/variable"/>
+    <genClasses ecoreClass="WPage.ecore#//Include">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Include/include"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//TextValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//TextValue/string"/>
@@ -161,9 +161,6 @@
     <genClasses ecoreClass="WPage.ecore#//Div">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Div/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Div/right"/>
-    </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Include">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Include/include"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

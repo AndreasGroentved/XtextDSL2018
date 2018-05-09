@@ -55,6 +55,7 @@ import dk.sdu.wPage.Div
 import dk.sdu.wPage.Name
 import dk.sdu.wPage.Whole
 import dk.sdu.wPage.Decimal
+import dk.sdu.wPage.LayoutContent
 
 /**
  * Generates code from your model files on save.
@@ -64,8 +65,10 @@ import dk.sdu.wPage.Decimal
 class WPageGenerator extends AbstractGenerator {
 
 	//TODO fix terminals
-	//TODO external
-	//TODO nesting views: div under div under div
+	//TODO all types like textvalue - with numbers too
+	//TODO pagenavigation -> first - last
+	//TODO further include stuff
+	//TODO advancetype variables need quotes
 	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
 	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -73,9 +76,8 @@ class WPageGenerator extends AbstractGenerator {
 		resource.allContents.filter(Page).forEach[generateHtmlPageFile(fsa)]
 	}
 	
-	var List<String> pageNames = new ArrayList;
-	
-	val Map<String,Variable> mapOfVariables = new HashMap
+	private var List<String> pageNames = new ArrayList;
+	private val Map<String,Variable> mapOfVariables = new HashMap
 	
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
 		val pageName =page.name + ".html"
@@ -95,31 +97,19 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def generateVars(Page page){
 		val vars = page.pagecontents.filter(Variable)
-		if(vars.isEmpty()) return ''''''
-		
 		vars.forEach[
 			mapOfVariables.put(it.name,it)
 		]
-		
-		vars.join(" ")["var " + it.name + " = " +  
-			it.getVariable
-		] + " var _current = " + pageNames.indexOf(page.name) +";"
+		vars.join(" ")["var " + it.name + " = " +  it.getVariable] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
-	def getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType 
-			else (variable.value as Type).simpleVar + ";"»'''
+	def getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar + ";"»'''
 	
-	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue»' '''	
+	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue+"'"»'''
 	def dispatch simpleVar(Boolean text) '''«text.value»'''
-	def dispatch simpleVar(Number text) '''«text.value»'''
+	def dispatch simpleVar(Number text) '''«text.computeValue»'''
 	
-	def generateTextValue(TextValue textValue) '''
-		«IF null !== textValue.string»
-		«textValue.string»
-		«ELSEIF null !== textValue.variable»
-		«(mapOfVariables.get(textValue.variable.name).value as Text).value.string»
-		«ENDIF»
-	'''
+	def generateTextValue(TextValue textValue) '''«IF null !== textValue.string»«textValue.string»«ELSEIF null !== textValue.variable»«(mapOfVariables.get(textValue.variable.name).value as Text).value.string»«ENDIF»'''
 	
 	def int mod(int number, int modulo){
 		(number % modulo + modulo) % modulo
@@ -127,9 +117,8 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def generateHTML(Page page) '''
 	<html>
-		<header>
+		<head>
 			«IF page.pagecontents.exists[it instanceof Title]»
-				«««TODO: alternative to find first
 				<title>«page.pagecontents.filter(Title).get(0).value»</title>  «««Only one can exists
 			«ENDIF»
 			<script>
@@ -137,28 +126,32 @@ class WPageGenerator extends AbstractGenerator {
 				«page.generateVars»
 			</script>
 			«page.pagecontents.filter(Css).generateCssFiles»
-		</header>
+		</head>
 		<body>
-			«FOR pagecontent:page.pagecontents.filter[it instanceof GroupedView || it instanceof  Include]»
-				«(pagecontent as GroupedView).generatePageBodyContent»
-			«ENDFOR»
+		«FOR p : page.pagecontents.filter[it instanceof GroupedView|| it instanceof Include || it instanceof IfElse]»
+			«p.generatePageBodyContent»
+		«ENDFOR»
 		</body>
 	</html>	
 	'''
 	
-	def generateCssFiles(Iterable<Css> css) '''«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\"" »''' 
+	def generateCssFiles(Iterable<Css> css) '''
+	«IF css.isEmpty» "\n"
+	«ELSE»«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\">"»«ENDIF»''' 
 	
-	def generatePageBodyContent(GroupedView groupedView) '''
+	def generatePageBodyContent(LayoutContent groupedView) '''
 		<div>
 		«IF groupedView instanceof Include»
 			«groupedView.include.getVariable»
-		«ELSE»
-			«FOR g: groupedView.group»
-				«IF groupedView.group.size > 1»
+		«ELSEIF groupedView instanceof IfElse» 
+			«(groupedView as IfElse).handleConditionalLayout»
+		«ELSEIF groupedView instanceof GroupedView»
+			«FOR g: (groupedView as GroupedView).group»
+				«IF (groupedView as GroupedView).group.size > 1»
 				<div style="display:inline-block">
 				«ENDIF»
 					«g.generateAdvancedType»
-				«IF groupedView.group.size > 1»
+				«IF (groupedView as GroupedView).group.size > 1»
 				</div>
 				«ENDIF»
 			«ENDFOR»
@@ -166,21 +159,20 @@ class WPageGenerator extends AbstractGenerator {
 		</div>
 	'''
 	
+	
 	def dispatch generateAdvancedType(View view) '''
 	<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
-		«FOR i:view.contents.filter(Image)»
-			«i.generateImage»
+		«FOR i:view.contents»
+		«i.generateViewContent»
 		«ENDFOR»
-		«FOR t:view.contents.filter(Text)»
-			«t.generateText»
-		«ENDFOR»
-		«IF view.contents.exists[it instanceof Editable]»
-			«FOR t:view.contents.filter(Editable)»
-				«t.generateEditable»
-			«ENDFOR»
-		«ENDIF»
 	</div>
 	'''
+	
+	def dispatch generateViewContent(Image image) '''«image.generateImage»'''
+	def dispatch generateViewContent(Text text) '''«text.generateText»'''
+	def dispatch generateViewContent(Editable edit) '''«edit.generateEditable»'''
+	def dispatch generateViewContent(GroupedView group) '''«group.generatePageBodyContent»'''
+	def dispatch generateViewContent(Include include) '''«include.generatePageBodyContent»'''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
 	
@@ -198,7 +190,7 @@ class WPageGenerator extends AbstractGenerator {
 	<button type="button"«
 	button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»
 	«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[it.buttonEvents] »«ENDIF»>
-	«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).findFirst[it instanceof Text].generateText»«ENDIF»
+	«IF button.contents.exists[it instanceof Text]»«button.contents.filter(Text).get(0).generateText»«ENDIF»
 	</button>
 	'''
 	
@@ -206,13 +198,30 @@ class WPageGenerator extends AbstractGenerator {
 		if(click.click  instanceof Action ){
 			(click.click as Action).buttonAction 
 		} else if(click.click instanceof IfElse){
-			(click.click as IfElse).handleIfElse
+			(click.click as IfElse).handleIfElseAction
 		}
 	}
 	
-	def CharSequence handleIfElse(IfElse ifElse) '''
-	«ifElse.condition.computeBooleanExpression»
-	'''
+	def CharSequence handleIfElseAction(IfElse ifElse) {
+		val ifside = ifElse.condition.computeBooleanExpression
+		if(ifside) ifElse.ifAction.buttonAction
+		else {
+			if(ifElse.elseAction!==null) ifElse.elseAction.buttonAction
+		}
+	}
+	
+	def CharSequence handleConditionalLayout(IfElse ifElse){
+		val ifside = ifElse.condition.computeBooleanExpression
+		if(ifside) ifElse.ifAction.handleLayoutAction
+		else {
+			if(ifElse.elseAction!==null) ifElse.elseAction.handleLayoutAction
+		}
+	}
+	
+	def CharSequence handleLayoutAction(Action action){
+		if(action.advancedType === null) return ""
+		return action.advancedType.generateAdvancedType
+	}
 	
 	def dispatch boolean computeBooleanExpression(Disjunction disjunction) {
 		disjunction.left.computeBooleanExpression || disjunction.right.computeBooleanExpression
@@ -224,7 +233,7 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def dispatch boolean computeBooleanExpression(Comparison booleanExp) {
 		val left = booleanExp.left.computeExp
-		val right = booleanExp.right.computeExp
+		val right = booleanExp.right?.computeExp
 		switch (booleanExp.op) {
 			case '==': left == right
 			case '!=': left != right
@@ -232,7 +241,7 @@ class WPageGenerator extends AbstractGenerator {
 			case '>': left > right
 			case '<=': left <= right
 			case '>=': left >= right
-			default: false
+			default: left>0
 		}
 	}
 	
@@ -268,8 +277,16 @@ class WPageGenerator extends AbstractGenerator {
 		Double.parseDouble(decimal.value)
 	}
 	
+	def dispatch double computeValue(Number number) {
+		computeExp(number)
+	}
+	
+	def dispatch double computeValue(Boolean bool) {
+		if(bool.value == "True") 1 else 0
+	}
+	
 	def dispatch double computeExp(Name variable) {
-		mapOfVariables.get(variable.name).value.computeValue
+		mapOfVariables.get(variable.name.name).value.computeValue
 	}
 	
 	def buttonAction(Action action){
@@ -280,7 +297,7 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def getAlert(Alert alert) {
 		if(alert===null) ""
-		else  "alert(\"" + alert.value + "\")"
+		else  "alert(\"" + alert.value.generateTextValue + "\")"
 	}
 	
 	def getScriptCall(Script script ){
@@ -332,7 +349,7 @@ class WPageGenerator extends AbstractGenerator {
 	def dispatch generateAdvancedType(Table table) '''
 		<table «table.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
 			«IF table.contents.exists[it instanceof Header]»
-			«table.contents.filter(Header).findFirst[it instanceof Header].generateTableHeader»
+			«table.contents.filter(Header).get(0).generateTableHeader»
 			«ENDIF»
 			«IF table.contents.exists[it instanceof Row]»
 			«table.contents.filter(Row).generateTableRows»
@@ -343,19 +360,19 @@ class WPageGenerator extends AbstractGenerator {
 	def generateTableHeader(Header header) '''
 	<tr>
 		«FOR h: header.contents»
-		<th>«h.value»</th>
+		<th>«h.generateTextValue»</th>
 		«ENDFOR»
 	</tr>
 	'''
+	
 	
 	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow].join("")»'''
 	
 	def generateTableRow(Row row) '''
 	<tr>
 		«FOR c:row.contents»
-		<td>«c.value»</td>
+		<td>«c.generateTextValue»</td>
 		«ENDFOR»
 	</tr>
 	'''
-
 }
