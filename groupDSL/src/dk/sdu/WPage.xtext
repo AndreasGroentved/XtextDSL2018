@@ -15,7 +15,7 @@ Page:
 ;
 
 PageContent returns LayoutContent: 
-	Title | Css | Variable | External | Include | GroupedView | IfElse 
+	Title | Css | Variable | Include | GroupedView | IfElse 
 ;
 
 Title: 
@@ -182,10 +182,6 @@ PageDirection:
 	'next' | 'previous' | 'first' | 'last'
 ;
 
-External: 
-	'external' script=Script
-;
-
 Script: 
 	name=ID '(' ((parameters+=TextValue)','?)*  ')'
 ;
@@ -227,7 +223,7 @@ Row:
 ;
 
 Include: 
-  {Include}	'include' include=[Variable]
+  	{Include}	'include' include=[Variable]
 ;
 
 TextValue:

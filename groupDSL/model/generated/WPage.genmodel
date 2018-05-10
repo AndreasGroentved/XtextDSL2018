@@ -74,9 +74,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/advancedType"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/include"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//External">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//External/script"/>
-    </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Script">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Script/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Script/parameters"/>

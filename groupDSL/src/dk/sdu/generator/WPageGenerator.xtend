@@ -371,7 +371,6 @@ class WPageGenerator extends AbstractGenerator {
 	</tr>
 	'''
 	
-	
 	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow].join("")»'''
 	
 	def generateTableRow(Row row) '''
