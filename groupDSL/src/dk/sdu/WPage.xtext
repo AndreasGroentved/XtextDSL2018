@@ -233,4 +233,3 @@ TextValue:
 @Override
 terminal SL_COMMENT: '#' !('\n'|'\r')* ('\r'? '\n')?;
 terminal FLOAT:  INT'.'INT;
-terminal CSSCSS: '"' (STRING)*'.css' '"';
