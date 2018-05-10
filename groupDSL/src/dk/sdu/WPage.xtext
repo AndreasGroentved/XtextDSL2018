@@ -159,11 +159,15 @@ Factor returns Expression:
 ;
 
 Primitive returns Expression:
-	Name | Number | bool=BooleanValue
+	Name | NumberValue | bool=BooleanValue
 ;
 
 Name: 
 	name=[Variable]
+;
+
+NumberValue:
+	Whole | Decimal
 ;
 
 BooleanValue:

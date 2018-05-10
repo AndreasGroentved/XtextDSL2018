@@ -173,6 +173,8 @@ class WPageGenerator extends AbstractGenerator {
 	def dispatch generateViewContent(Editable edit) '''«edit.generateEditable»'''
 	def dispatch generateViewContent(GroupedView group) '''«group.generatePageBodyContent»'''
 	def dispatch generateViewContent(Include include) '''«include.generatePageBodyContent»'''
+	def dispatch generateViewContent(Style style) ''''''
+	def dispatch generateViewContent(CssClass cssClass) ''''''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
 	
@@ -266,11 +268,15 @@ class WPageGenerator extends AbstractGenerator {
 	}
 		
 	def dispatch double computeExp(Number num) {
-		num.value.computeValue
+		num.value.computeExp
 	}
 	
-	def dispatch double computeValue(Whole whole) {
+	def dispatch double computeExp(Whole whole) {
 		whole.value
+	}
+	
+	def dispatch double computeExp(Decimal decimal) {
+		Double.parseDouble(decimal.value)
 	}
 	
 	def dispatch double computeValue(Decimal decimal) {

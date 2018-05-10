@@ -66,6 +66,7 @@
     <genClasses ecoreClass="WPage.ecore#//Name">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Name/name"/>
     </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//NumberValue"/>
     <genClasses ecoreClass="WPage.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Action/pageDirection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/alert"/>

@@ -28,11 +28,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ButtonContent #//Expression #//ViewContent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Whole">
+  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//ButtonContent #//ViewContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Whole" eSuperTypes="#//NumberValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Decimal">
+  <eClassifiers xsi:type="ecore:EClass" name="Decimal" eSuperTypes="#//NumberValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AdvancedType"/>
@@ -72,6 +72,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Name" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Variable"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumberValue" eSuperTypes="#//Expression"/>
   <eClassifiers xsi:type="ecore:EClass" name="Action">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pageDirection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="alert" eType="#//Alert"
@@ -131,7 +132,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Number" eSuperTypes="#//Type">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//NumberValue"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Boolean" eSuperTypes="#//Type">
