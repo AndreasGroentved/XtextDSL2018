@@ -103,7 +103,7 @@ class WPageGenerator extends AbstractGenerator {
 		vars.join(" ")["var " + it.name + " = " +  it.getVariable] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
-	def getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar + ";"»'''
+	def CharSequence getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar + ";"»'''
 	
 	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue+"'"»'''
 	def dispatch simpleVar(Boolean text) '''«text.value»'''
@@ -139,7 +139,7 @@ class WPageGenerator extends AbstractGenerator {
 	«IF css.isEmpty» "\n"
 	«ELSE»«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\">"»«ENDIF»''' 
 	
-	def generatePageBodyContent(LayoutContent groupedView) '''
+	def CharSequence generatePageBodyContent(LayoutContent groupedView) '''
 		<div>
 		«IF groupedView instanceof Include»
 			«groupedView.include.getVariable»
@@ -186,7 +186,7 @@ class WPageGenerator extends AbstractGenerator {
 	</form>
 	'''
 	
-	def dispatch generateAdvancedType(Button button) '''
+	def dispatch CharSequence generateAdvancedType(Button button) '''
 	<button type="button"«
 	button.contents.filter(DisplayConfiguration).generateDisplayConfiguration»
 	«IF button.contents.exists[it instanceof Click]»«button.contents.filter(Click).join(" ")[it.buttonEvents] »«ENDIF»>
