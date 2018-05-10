@@ -65,11 +65,15 @@ import dk.sdu.wPage.LayoutContent
 class WPageGenerator extends AbstractGenerator {
 
 	//TODO fix terminals
+	//TODO line breaks
+	//TODO if can only use variables
 	//TODO all types like textvalue - with numbers too
 	//TODO pagenavigation -> first - last
 	//TODO further include stuff
 	//TODO advancetype variables need quotes
 	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
+	//TODO index of pages
+	//TODO editview change variable - runtime if/else
 	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
@@ -90,7 +94,7 @@ class WPageGenerator extends AbstractGenerator {
 		
 		val previous = "function prev(){window.location.href = '" + pageNames.get((currentIndex-1).mod(size)) + ".html'} "
 		val next = "function next(){window.location.href = '" + pageNames.get((currentIndex+1).mod(size)) + ".html'} "
-		val goTo = "function goto(pageName){window.location.href = \" ' \" + pageName.concat('.html') + \" ' \"}"
+		val goTo = "function goto(pageName){window.location.href =   pageName.concat('.html') }"
 		
 		previous + next + goTo
 	}
@@ -100,10 +104,11 @@ class WPageGenerator extends AbstractGenerator {
 		vars.forEach[
 			mapOfVariables.put(it.name,it)
 		]
-		vars.join(" ")["var " + it.name + " = " +  it.getVariable] + " var _current = " + pageNames.indexOf(page.name) +";"
+		val simple = vars.filter[!(it.value instanceof AdvancedType)]
+		simple.join("")[ "var " + it.name + " = " +  /*"'" + it.getVariable + "'"*/ it.getVariable +";"] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
-	def CharSequence getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar + ";"»'''
+	def CharSequence getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar»'''
 	
 	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue+"'"»'''
 	def dispatch simpleVar(Boolean text) '''«text.value»'''
@@ -314,7 +319,7 @@ class WPageGenerator extends AbstractGenerator {
 			switch (direction){
 				case "next" : "next()"
 				case "previous" : "prev()"
-				case  direction.startsWith("goto") : "goto(" + direction.replace("goto","") + ")"
+				case  direction.startsWith("goto") : "goto(\"" + direction.replace("goto ","").replace("\"","") + "\")"
 				default: "next"
 			}
 	 »'''
@@ -364,7 +369,6 @@ class WPageGenerator extends AbstractGenerator {
 		«ENDFOR»
 	</tr>
 	'''
-	
 	
 	def generateTableRows(Iterable<Row> rows) '''«rows.map[it.generateTableRow].join("")»'''
 	

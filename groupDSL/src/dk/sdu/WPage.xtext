@@ -175,7 +175,7 @@ Action:
 ;
 
 PageDirection:
-	'next' | 'previous' | 'first' | 'last'
+	'next' | 'previous' | 'first' | 'last' | 'goto' STRING
 ;
 
 External: 
