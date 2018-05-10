@@ -15,7 +15,7 @@ Page:
 ;
 
 PageContent returns LayoutContent: 
-	Title | Css | Variable | External | Include | GroupedView | IfElse 
+	Title | Css | Variable | Include | GroupedView | IfElse 
 ;
 
 Title: 
@@ -159,11 +159,15 @@ Factor returns Expression:
 ;
 
 Primitive returns Expression:
-	Name | Number | bool=BooleanValue
+	Name | NumberValue | bool=BooleanValue
 ;
 
 Name: 
 	name=[Variable]
+;
+
+NumberValue:
+	Whole | Decimal
 ;
 
 BooleanValue:
@@ -176,10 +180,6 @@ Action:
 
 PageDirection:
 	'next' | 'previous' | 'first' | 'last' | 'goto' STRING
-;
-
-External: 
-	'external' script=Script
 ;
 
 Script: 
@@ -223,7 +223,7 @@ Row:
 ;
 
 Include: 
-  {Include}	'include' include=[Variable]
+  	{Include}	'include' include=[Variable]
 ;
 
 TextValue:
@@ -233,4 +233,3 @@ TextValue:
 @Override
 terminal SL_COMMENT: '#' !('\n'|'\r')* ('\r'? '\n')?;
 terminal FLOAT:  INT'.'INT;
-terminal CSSCSS: '"' (STRING)*'.css' '"';
