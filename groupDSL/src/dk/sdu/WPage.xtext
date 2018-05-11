@@ -155,16 +155,23 @@ Exp returns Expression:
 ;
 
 Factor returns Expression:
-	Primitive ( ('*' {Mul.left=current} | '/' {Div.left=current}) right=Primitive)*
+	Primitive ( ('*' {Mul.left=current} | '/' {Div.left=current}) right=Primitive)* 
 ;
 
 Primitive returns Expression:
-	Name | NumberValue | bool=BooleanValue
+	Name | NumberValue | BooleanValue | Index
 ;
 
-Name: 
-	name=[Variable]
+Index returns Index:
+	{Index} value = 'current' | 'last'
 ;
+
+
+Name: 
+	name = [Variable]  
+;
+
+
 
 NumberValue:
 	Whole | Decimal

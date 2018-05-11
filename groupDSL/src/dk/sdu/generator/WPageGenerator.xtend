@@ -56,6 +56,7 @@ import dk.sdu.wPage.Name
 import dk.sdu.wPage.Whole
 import dk.sdu.wPage.Decimal
 import dk.sdu.wPage.LayoutContent
+import dk.sdu.wPage.Index
 
 /**
  * Generates code from your model files on save.
@@ -64,16 +65,14 @@ import dk.sdu.wPage.LayoutContent
  */
 class WPageGenerator extends AbstractGenerator {
 
-	//TODO fix terminals
-	//TODO line breaks
+	//TODO fix terminals (nice, not necesary)
+	//TODO line breaks (nice, not necesary)
 	//TODO if can only use variables
-	//TODO all types like textvalue - with numbers too
-	//TODO pagenavigation -> first - last
-	//TODO further include stuff
-	//TODO advancetype variables need quotes
-	//TODO Ulrik doesnt like long syntax - find ways to shorten it (possibly for individual)
-	//TODO index of pages
-	//TODO editview change variable - runtime if/else
+	//TODO all types like textvalue - with numbers too (nice to have)
+	//TODO advancetype variables need quotes (for now they are just removed)
+	//TODO editview change variable - runtime if/else (not happening...?)
+	//TODO parenthesis in if
+	//TODO e.g. last-1  > current-5 gives nullpointer
 	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
@@ -82,36 +81,49 @@ class WPageGenerator extends AbstractGenerator {
 	
 	private var List<String> pageNames = new ArrayList;
 	private val Map<String,Variable> mapOfVariables = new HashMap
+	private var int currentIndex = 0;
 	
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
 		val pageName =page.name + ".html"
 		fsa.generateFile(pageName, page.generateHTML)
+		print(mapOfVariables)
 	}
 	
 	def generateNavigationMethods(Page page){
 		val size = pageNames.size 
-		val currentIndex = pageNames.indexOf(page.name)
+		currentIndex = pageNames.indexOf(page.name)
 		
 		val previous = "function prev(){window.location.href = '" + pageNames.get((currentIndex-1).mod(size)) + ".html'} "
 		val next = "function next(){window.location.href = '" + pageNames.get((currentIndex+1).mod(size)) + ".html'} "
 		val goTo = "function goto(pageName){window.location.href =   pageName.concat('.html') }"
+		val first = "function next(){window.location.href = '" + pageNames.get(0) + ".html'} "
+		val last = "function next(){window.location.href = '" + pageNames.get(size-1) + ".html'} "
+		
 		
 		previous + next + goTo
 	}
 	
 	def generateVars(Page page){
 		val vars = page.pagecontents.filter(Variable)
-		vars.forEach[
-			mapOfVariables.put(it.name,it)
-		]
+		vars.forEach[mapOfVariables.put(it.name,it)]
 		val simple = vars.filter[!(it.value instanceof AdvancedType)]
 		simple.join("")[ "var " + it.name + " = " +  /*"'" + it.getVariable + "'"*/ it.getVariable +";"] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
+	
+	
+	
+	def double getVariableFromMap(Name name){
+		val a = name.name.name
+		val b = mapOfVariables.get(name.name)
+		mapOfVariables.get(name.name.name).value.computeValue 
+	} 
+	
+	
 	def CharSequence getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar»'''
 	
 	def dispatch simpleVar(Text text) ''''«text.value.generateTextValue+"'"»'''
-	def dispatch simpleVar(Boolean text) '''«text.value»'''
+	def dispatch simpleVar(Boolean text) '''«text.value.toLowerCase»'''
 	def dispatch simpleVar(Number text) '''«text.computeValue»'''
 	
 	def generateTextValue(TextValue textValue) '''«IF null !== textValue.string»«textValue.string»«ELSEIF null !== textValue.variable»«(mapOfVariables.get(textValue.variable.name).value as Text).value.string»«ENDIF»'''
@@ -141,9 +153,11 @@ class WPageGenerator extends AbstractGenerator {
 	'''
 	
 	def generateCssFiles(Iterable<Css> css) '''
-	«IF css.isEmpty» "\n"
+	«IF css.isEmpty» 
 	«ELSE»«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\">"»«ENDIF»''' 
 	
+	
+	//TODO dispatch
 	def CharSequence generatePageBodyContent(LayoutContent groupedView) '''
 		<div>
 		«IF groupedView instanceof Include»
@@ -164,7 +178,6 @@ class WPageGenerator extends AbstractGenerator {
 		</div>
 	'''
 	
-	
 	def dispatch generateAdvancedType(View view) '''
 	<div «view.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
 		«FOR i:view.contents»
@@ -178,7 +191,7 @@ class WPageGenerator extends AbstractGenerator {
 	def dispatch generateViewContent(Editable edit) '''«edit.generateEditable»'''
 	def dispatch generateViewContent(GroupedView group) '''«group.generatePageBodyContent»'''
 	def dispatch generateViewContent(Include include) '''«include.generatePageBodyContent»'''
-	def dispatch generateViewContent(Style style) ''''''
+	def dispatch generateViewContent(Style style) ''''''  //TODO fix
 	def dispatch generateViewContent(CssClass cssClass) ''''''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
@@ -201,7 +214,7 @@ class WPageGenerator extends AbstractGenerator {
 	</button>
 	'''
 	
-	def CharSequence getButtonEvents(Click click) { //Limited to alert and navigation
+	def CharSequence getButtonEvents(Click click) { //Limited to alert and navigation, TODO dispatch
 		if(click.click  instanceof Action ){
 			(click.click as Action).buttonAction 
 		} else if(click.click instanceof IfElse){
@@ -256,11 +269,21 @@ class WPageGenerator extends AbstractGenerator {
 		booleanExp.condition.computeBooleanExpression
 	}
 	
+	def dispatch double computeExp(Index index) {
+		switch(index.value){
+			case 'current': currentIndex
+			case 'last' : pageNames.size-1
+			default: throw new Exception("You broke it")
+		}  
+	}
+	
+	
 	def dispatch double computeExp(Add exp) {
 		exp.left.computeExp + exp.right.computeExp
 	}
 	
 	def dispatch double computeExp(Sub exp) {
+		
 		exp.left.computeExp - exp.right.computeExp
 	}
 	
@@ -274,6 +297,14 @@ class WPageGenerator extends AbstractGenerator {
 		
 	def dispatch double computeExp(Number num) {
 		num.value.computeExp
+	}
+	
+	def dispatch double computeExp(Boolean num) {
+		num.computeValue
+	}
+	
+	def dispatch double computeExp(boolean num) {
+		if(num) 1 else 0
 	}
 	
 	def dispatch double computeExp(Whole whole) {
@@ -293,11 +324,19 @@ class WPageGenerator extends AbstractGenerator {
 	}
 	
 	def dispatch double computeValue(Boolean bool) {
-		if(bool.value == "True") 1 else 0
+		if(bool.value.toLowerCase == "true") 1 else 0
+	}
+	
+	def dispatch double computeExp(String variable) {
+		switch(variable){
+			case 'current': currentIndex
+			case 'last' : pageNames.size-1
+			default: throw new Exception("Will never happen")
+		}
 	}
 	
 	def dispatch double computeExp(Name variable) {
-		mapOfVariables.get(variable.name.name).value.computeValue
+		variable.variableFromMap	
 	}
 	
 	def buttonAction(Action action){
@@ -357,6 +396,7 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def dispatch generateCssConfiguration(CssId cssId) '''id="«cssId.value»"'''
 	
+	//TODO necesary if exists?
 	def dispatch generateAdvancedType(Table table) '''
 		<table «table.contents.filter(DisplayConfiguration).generateDisplayConfiguration»>
 			«IF table.contents.exists[it instanceof Header]»

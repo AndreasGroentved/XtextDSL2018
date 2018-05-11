@@ -60,8 +60,9 @@
     <genClasses ecoreClass="WPage.ecore#//Parenthesis">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Parenthesis/condition"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Expression">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Expression/bool"/>
+    <genClasses ecoreClass="WPage.ecore#//Expression"/>
+    <genClasses ecoreClass="WPage.ecore#//Index">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Index/value"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Name">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Name/name"/>
