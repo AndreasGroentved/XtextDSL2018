@@ -94,8 +94,8 @@ class WPageGenerator extends AbstractGenerator {
 		val previous = "function prev(){window.location.href = '" + pageNames.get((currentIndex-1).mod(size)) + ".html'} "
 		val next = "function next(){window.location.href = '" + pageNames.get((currentIndex+1).mod(size)) + ".html'} "
 		val goTo = "function goto(pageName){window.location.href = pageName.concat('.html') }"
-		val first = "function next(){window.location.href = '" + pageNames.get(0) + ".html'} "
-		val last = "function next(){window.location.href = '" + pageNames.get(size-1) + ".html'} "
+		val first = "function first(){window.location.href = '" + pageNames.get(0) + ".html'} "
+		val last = "function last(){window.location.href = '" + pageNames.get(size-1) + ".html'} "
 		
 		first + last + previous + next + goTo
 	}
@@ -359,7 +359,9 @@ class WPageGenerator extends AbstractGenerator {
 				case "next" : "next()"
 				case "previous" : "prev()"
 				case  direction.startsWith("goto") : "goto(\"" + direction.replace("goto ","").replace("\"","") + "\")"
-				default: "next"
+				case "first" : "first()"
+				case "last" : "last()"
+				default: "next()" 
 			}
 	 »'''
 	
