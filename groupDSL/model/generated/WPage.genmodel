@@ -57,8 +57,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Comparison/op"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Comparison/right"/>
     </genClasses>
-    <genClasses ecoreClass="WPage.ecore#//Parenthesis">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Parenthesis/condition"/>
+    <genClasses ecoreClass="WPage.ecore#//LogParenthesis">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//LogParenthesis/condition"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Expression"/>
     <genClasses ecoreClass="WPage.ecore#//Index">
@@ -68,6 +68,12 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WPage.ecore#//Name/name"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//NumberValue"/>
+    <genClasses ecoreClass="WPage.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//BooleanValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WPage.ecore#//ExpParenthesis">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//ExpParenthesis/expression"/>
+    </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//Action/pageDirection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Action/alert"/>

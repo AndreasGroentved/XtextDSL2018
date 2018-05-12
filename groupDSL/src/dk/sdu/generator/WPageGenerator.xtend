@@ -47,7 +47,6 @@ import dk.sdu.wPage.IfElse
 import dk.sdu.wPage.Disjunction
 import dk.sdu.wPage.Conjunction
 import dk.sdu.wPage.Comparison
-import dk.sdu.wPage.Parenthesis
 import dk.sdu.wPage.Add
 import dk.sdu.wPage.Sub
 import dk.sdu.wPage.Mul
@@ -57,6 +56,8 @@ import dk.sdu.wPage.Whole
 import dk.sdu.wPage.Decimal
 import dk.sdu.wPage.LayoutContent
 import dk.sdu.wPage.Index
+import dk.sdu.wPage.LogParenthesis
+import dk.sdu.wPage.ExpParenthesis
 
 /**
  * Generates code from your model files on save.
@@ -67,12 +68,9 @@ class WPageGenerator extends AbstractGenerator {
 
 	//TODO fix terminals (nice, not necesary)
 	//TODO line breaks (nice, not necesary)
-	//TODO if can only use variables
 	//TODO all types like textvalue - with numbers too (nice to have)
 	//TODO advancetype variables need quotes (for now they are just removed)
 	//TODO editview change variable - runtime if/else (not happening...?)
-	//TODO parenthesis in if
-	//TODO e.g. last-1  > current-5 gives nullpointer
 	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
@@ -95,12 +93,11 @@ class WPageGenerator extends AbstractGenerator {
 		
 		val previous = "function prev(){window.location.href = '" + pageNames.get((currentIndex-1).mod(size)) + ".html'} "
 		val next = "function next(){window.location.href = '" + pageNames.get((currentIndex+1).mod(size)) + ".html'} "
-		val goTo = "function goto(pageName){window.location.href =   pageName.concat('.html') }"
+		val goTo = "function goto(pageName){window.location.href = pageName.concat('.html') }"
 		val first = "function next(){window.location.href = '" + pageNames.get(0) + ".html'} "
 		val last = "function next(){window.location.href = '" + pageNames.get(size-1) + ".html'} "
 		
-		
-		previous + next + goTo
+		first + last + previous + next + goTo
 	}
 	
 	def generateVars(Page page){
@@ -110,15 +107,9 @@ class WPageGenerator extends AbstractGenerator {
 		simple.join("")[ "var " + it.name + " = " +  /*"'" + it.getVariable + "'"*/ it.getVariable +";"] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
-	
-	
-	
 	def double getVariableFromMap(Name name){
-		val a = name.name.name
-		val b = mapOfVariables.get(name.name)
 		mapOfVariables.get(name.name.name).value.computeValue 
-	} 
-	
+	}
 	
 	def CharSequence getVariable(Variable variable) '''«if(variable.value instanceof AdvancedType) (variable.value as AdvancedType).generateAdvancedType else (variable.value as Type).simpleVar»'''
 	
@@ -155,7 +146,6 @@ class WPageGenerator extends AbstractGenerator {
 	def generateCssFiles(Iterable<Css> css) '''
 	«IF css.isEmpty» 
 	«ELSE»«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\">"»«ENDIF»''' 
-	
 	
 	//TODO dispatch
 	def CharSequence generatePageBodyContent(LayoutContent groupedView) '''
@@ -265,7 +255,7 @@ class WPageGenerator extends AbstractGenerator {
 		}
 	}
 	
-	def dispatch boolean computeBooleanExpression(Parenthesis booleanExp) {
+	def dispatch boolean computeBooleanExpression(LogParenthesis booleanExp) {
 		booleanExp.condition.computeBooleanExpression
 	}
 	
@@ -313,6 +303,10 @@ class WPageGenerator extends AbstractGenerator {
 	
 	def dispatch double computeExp(Decimal decimal) {
 		Double.parseDouble(decimal.value)
+	}
+	
+	def dispatch double computeExp(ExpParenthesis parenthesis) {
+		parenthesis.expression.computeExp
 	}
 	
 	def dispatch double computeValue(Decimal decimal) {

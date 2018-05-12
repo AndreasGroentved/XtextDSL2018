@@ -62,7 +62,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parenthesis" eSuperTypes="#//Proposition">
+  <eClassifiers xsi:type="ecore:EClass" name="LogParenthesis" eSuperTypes="#//Proposition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Proposition"
         containment="true"/>
   </eClassifiers>
@@ -74,6 +74,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Variable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NumberValue" eSuperTypes="#//Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanValue" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpParenthesis" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pageDirection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="alert" eType="#//Alert"

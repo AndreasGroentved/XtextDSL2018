@@ -135,7 +135,7 @@ Conjunction returns Proposition:
 ;
 
 Condition returns Proposition:
-	Comparison | Parenthesis
+	Comparison | LogParenthesis
 ;
 
 Comparison:
@@ -146,8 +146,8 @@ RelationalOp:
 	'==' | '!=' | '<' | '>' | '<=' | '>=' 
 ;
 
-Parenthesis:
-	'(' condition=LogicExp ')'
+LogParenthesis:
+	'[' condition=LogicExp ']'
 ;
 
 Exp returns Expression:
@@ -159,26 +159,27 @@ Factor returns Expression:
 ;
 
 Primitive returns Expression:
-	Name | NumberValue | BooleanValue | Index
+	Name | NumberValue | BooleanValue | Index | ExpParenthesis
 ;
 
 Index returns Index:
-	{Index} value = 'current' | 'last'
+	{Index} value = 'current' | value = 'last'
 ;
-
 
 Name: 
 	name = [Variable]  
 ;
-
-
 
 NumberValue:
 	Whole | Decimal
 ;
 
 BooleanValue:
-	'true' | 'false'
+	value='true' | value='false'
+;
+
+ExpParenthesis:
+	'(' expression=Exp ')'
 ;
 
 Action: 
