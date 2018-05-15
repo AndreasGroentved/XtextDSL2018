@@ -113,9 +113,6 @@
         eType="#//TableContent" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TableContent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TableDimension" eSuperTypes="#//TableContent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Header" eSuperTypes="#//TableContent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
         eType="#//TextValue" containment="true"/>

@@ -99,9 +99,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Table/contents"/>
     </genClasses>
     <genClasses ecoreClass="WPage.ecore#//TableContent"/>
-    <genClasses ecoreClass="WPage.ecore#//TableDimension">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WPage.ecore#//TableDimension/value"/>
-    </genClasses>
     <genClasses ecoreClass="WPage.ecore#//Header">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WPage.ecore#//Header/contents"/>
     </genClasses>

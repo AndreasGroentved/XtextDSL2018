@@ -215,11 +215,7 @@ Table:
 ;
 
 TableContent: 
-	DisplayConfiguration | TableDimension | Header | Row 
-;
-
-TableDimension: 
-	'tabledimensions' value=STRING
+	DisplayConfiguration | Header | Row 
 ;
 
 Header: 
