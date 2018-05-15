@@ -65,12 +65,6 @@ import dk.sdu.wPage.ExpParenthesis
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class WPageGenerator extends AbstractGenerator {
-
-	//TODO fix terminals (nice, not necesary)
-	//TODO line breaks (nice, not necesary)
-	//TODO all types like textvalue - with numbers too (nice to have)
-	//TODO advancetype variables need quotes (for now they are just removed)
-	//TODO editview change variable - runtime if/else (not happening...?)
 	 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		pageNames = resource.allContents.filter(Page).map[it.name].toList
@@ -104,7 +98,7 @@ class WPageGenerator extends AbstractGenerator {
 		val vars = page.pagecontents.filter(Variable)
 		vars.forEach[mapOfVariables.put(it.name,it)]
 		val simple = vars.filter[!(it.value instanceof AdvancedType)]
-		simple.join("")[ "var " + it.name + " = " +  /*"'" + it.getVariable + "'"*/ it.getVariable +";"] + " var _current = " + pageNames.indexOf(page.name) +";"
+		simple.join("")[ "var " + it.name + " = " +  it.getVariable +";"] + " var _current = " + pageNames.indexOf(page.name) +";"
 	}
 	
 	def double getVariableFromMap(Name name){
@@ -147,7 +141,6 @@ class WPageGenerator extends AbstractGenerator {
 	«IF css.isEmpty» 
 	«ELSE»«css.join("\n")["<link rel= \"stylesheet\" href=\""+it.value] + "\">"»«ENDIF»''' 
 	
-	//TODO dispatch
 	def CharSequence generatePageBodyContent(LayoutContent groupedView) '''
 		<div>
 		«IF groupedView instanceof Include»
