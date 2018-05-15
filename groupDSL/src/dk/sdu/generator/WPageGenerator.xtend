@@ -173,8 +173,8 @@ class WPageGenerator extends AbstractGenerator {
 	def dispatch generateViewContent(Editable edit) '''«edit.generateEditable»'''
 	def dispatch generateViewContent(GroupedView group) '''«group.generatePageBodyContent»'''
 	def dispatch generateViewContent(Include include) '''«include.generatePageBodyContent»'''
-	def dispatch generateViewContent(Style style) '''«style.generateViewConfiguration»'''
-	def dispatch generateViewContent(CssClass cssClass) '''«cssClass.generateCssConfiguration»'''
+	def dispatch generateViewContent(Style style) ''''''
+	def dispatch generateViewContent(CssClass cssClass) ''''''
 	
 	def generateImage(Image image) '''<img src="«image.value»">'''
 	
