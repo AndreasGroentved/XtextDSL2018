@@ -78,7 +78,6 @@ class WPageGenerator extends AbstractGenerator {
 	def generateHtmlPageFile(Page page, IFileSystemAccess2 fsa) {
 		val pageName =page.name + ".html"
 		fsa.generateFile(pageName, page.generateHTML)
-		print(mapOfVariables)
 	}
 	
 	def generateNavigationMethods(Page page){
